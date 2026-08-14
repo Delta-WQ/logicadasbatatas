@@ -1,1 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A Lógica das Batatas - Delta787</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+
+    <a href="index.html">Início</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="servicos.html">Serviços</a>
+    <a href="contacto.html">Contacto</a>
+
+</nav>
+
+
+<header>
+
+    <h1>🥔 A Lógica das Batatas</h1>
+
+    <p>
+        Um jogo de lógica, raciocínio e desafios.
+    </p>
+
+    <button onclick="iniciarJogo()">
+        Começar o jogo
+    </button>
+
+</header>
+
+
+<section id="jogo">
+
+    <h2>Desafio</h2>
+
+    <p id="pergunta">
+        Clique em "Começar o jogo" para iniciar.
+    </p>
+
+    <div id="opcoes"></div>
+
+    <p id="resultado"></p>
+
+    <p>
+        Pontuação:
+        <strong id="pontuacao">0</strong>
+    </p>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 Delta787 - A Lógica das Batatas
+    </p>
+
+</footer>
+
+
+<script>
+
+let pontuacao = 0;
+
+let perguntaAtual = 0;
+
+
+const perguntas = [
+
+    {
+        pergunta: "Se existem 3 batatas e você ganha mais 2, quantas batatas existem?",
+        opcoes: ["4", "5", "6"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Se você tem 10 batatas e perde 3, quantas sobram?",
+        opcoes: ["6", "7", "8"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Qual número vem depois de 9?",
+        opcoes: ["8", "10", "11"],
+        correta: 1
+    }
+
+];
+
+
+function iniciarJogo() {
+
+    pontuacao = 0;
+
+    perguntaAtual = 0;
+
+    document.getElementById("pontuacao").textContent = pontuacao;
+
+    mostrarPergunta();
+
+}
+
+
+function mostrarPergunta() {
+
+    if (perguntaAtual >= perguntas.length) {
+
+        document.getElementById("pergunta").textContent =
+            "Fim do jogo!";
+
+        document.getElementById("opcoes").innerHTML = "";
+
+        document.getElementById("resultado").textContent =
+            "Sua pontuação final foi: " + pontuacao;
+
+        return;
+    }
+
+
+    const pergunta = perguntas[perguntaAtual];
+
+    document.getElementById("pergunta").textContent =
+        pergunta.pergunta;
+
+
+    const opcoes = document.getElementById("opcoes");
+
+    opcoes.innerHTML = "";
+
+
+    pergunta.opcoes.forEach(function(opcao, indice) {
+
+        const botao = document.createElement("button");
+
+        botao.textContent = opcao;
+
+        botao.onclick = function() {
+
+            verificarResposta(indice);
+
+        };
+
+        opcoes.appendChild(botao);
+
+    });
+
+
+    document.getElementById("resultado").textContent = "";
+
+}
+
+
+function verificarResposta(indice) {
+
+    const pergunta = perguntas[perguntaAtual];
+
+
+    if (indice === pergunta.correta) {
+
+        pontuacao++;
+
+        document.getElementById("resultado").textContent =
+            "✅ Resposta correta!";
+
+    } else {
+
+        document.getElementById("resultado").textContent =
+            "❌ Resposta incorreta.";
+
+    }
+
+
+    document.getElementById("pontuacao").textContent =
+        pontuacao;
+
+
+    perguntaAtual++;
+
+
+    setTimeout(function() {
+
+        mostrarPergunta();
+
+    }, 800);
+
+}
+
+</script>
+
+
+</body>
+
+</html>
