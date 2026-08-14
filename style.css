@@ -67,3 +67,20 @@ nav a {
 }
 
 }
+section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+section h2 {
+    margin: 20px 0;
+}
+
+section h2 a {
+    text-decoration: none;
+}
+
+section h2 a:hover {
+    text-decoration: underline;
+}
