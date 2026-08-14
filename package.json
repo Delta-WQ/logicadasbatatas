@@ -1,1 +1,12 @@
-
+{
+  "name": "logica-das-batatas",
+  "version": "1.0.0",
+  "description": "Backend do jogo A Logica das Batatas",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
