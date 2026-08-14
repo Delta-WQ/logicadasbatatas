@@ -27,15 +27,30 @@
             font-size: 17px;
         }
 
+        #status {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .status-item {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
         #fase {
             font-size: 26px;
             font-weight: bold;
-            margin-bottom: 10px;
         }
 
         #progresso {
             font-weight: bold;
-            margin-bottom: 20px;
+            margin: 15px 0;
         }
 
         #pergunta {
@@ -78,10 +93,6 @@
             font-size: 19px;
             font-weight: bold;
             margin: 20px 0;
-        }
-
-        #pontuacao {
-            font-size: 25px;
         }
 
         #barra-container {
@@ -173,25 +184,54 @@
 
 <section id="jogo">
 
+
+    <div id="status">
+
+        <div class="status-item">
+            ❤️ Vidas:
+            <span id="vidas">5</span>
+        </div>
+
+        <div class="status-item">
+            🪙 Moedas:
+            <span id="moedas">0</span>
+        </div>
+
+        <div class="status-item">
+            🏆 Recompensas:
+            <span id="recompensas">0</span>
+        </div>
+
+    </div>
+
+
     <div id="fase">
         🥔 Fase 1 de 1.000
     </div>
+
 
     <div id="progresso">
         Você está na fase 1 de 1.000
     </div>
 
+
     <div id="barra-container">
+
         <div id="barra"></div>
+
     </div>
+
 
     <p id="pergunta">
         Clique em "Começar o jogo" para iniciar.
     </p>
 
+
     <div id="opcoes"></div>
 
+
     <p id="resultado"></p>
+
 
     <p>
         Pontuação:
@@ -203,15 +243,26 @@
 
 <section id="fim">
 
-    <h2>🏆 Parabéns!</h2>
+    <h2>🏆 Fim do jogo</h2>
 
     <p>
-        Você completou as 1.000 fases!
+        Você chegou até a fase:
+        <strong id="fase-final">0</strong>
     </p>
 
     <p>
-        Pontuação final:
+        Pontuação:
         <strong id="pontuacao-final">0</strong>
+    </p>
+
+    <p>
+        🪙 Moedas:
+        <strong id="moedas-final">0</strong>
+    </p>
+
+    <p>
+        🏆 Recompensas:
+        <strong id="recompensas-final">0</strong>
     </p>
 
     <button onclick="iniciarJogo()">
@@ -232,13 +283,25 @@
 
 <script>
 
+
 const TOTAL_FASES = 1000;
 
 let faseAtual = 0;
 
 let pontuacao = 0;
 
+let vidas = 5;
+
+let moedas = 0;
+
+let recompensas = 0;
+
 let perguntas = [];
+
+
+/* =========================
+   GERAR PERGUNTAS
+   ========================= */
 
 
 function gerarPerguntas() {
@@ -247,159 +310,241 @@ function gerarPerguntas() {
 
     for (let i = 1; i <= TOTAL_FASES; i++) {
 
-        const dificuldade = Math.ceil(i / 200);
+        const dificuldade =
+            Math.ceil(i / 200);
 
-        const tipo = i % 10;
+        const tipo =
+            i % 10;
 
         let pergunta;
 
 
         if (tipo === 0) {
 
-            const a = i + dificuldade;
-            const b = (i % 20) + dificuldade;
-            const resposta = a + b;
+            const a =
+                i + dificuldade;
 
-            pergunta = criarPergunta(
-                "Você tem " + a +
-                " batatas e recebe mais " + b +
-                ". Quantas batatas você tem agora?",
-                resposta
-            );
+            const b =
+                (i % 20) + dificuldade;
+
+            const resposta =
+                a + b;
+
+            pergunta =
+                criarPergunta(
+                    "Você tem " +
+                    a +
+                    " batatas e recebe mais " +
+                    b +
+                    ". Quantas batatas você tem agora?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 1) {
 
-            const a = i + 30 + dificuldade;
-            const b = (i % 20) + dificuldade;
-            const resposta = a - b;
+            const a =
+                i + 30 + dificuldade;
 
-            pergunta = criarPergunta(
-                "Uma cesta tem " + a +
-                " batatas. Você retira " + b +
-                ". Quantas batatas restam?",
-                resposta
-            );
+            const b =
+                (i % 20) + dificuldade;
+
+            const resposta =
+                a - b;
+
+            pergunta =
+                criarPergunta(
+                    "Uma cesta tem " +
+                    a +
+                    " batatas. Você retira " +
+                    b +
+                    ". Quantas batatas restam?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 2) {
 
-            const a = (i % 10) + 2;
-            const b = (i % 12) + 2;
-            const resposta = a * b;
+            const a =
+                (i % 10) + 2;
 
-            pergunta = criarPergunta(
-                "Existem " + a +
-                " grupos com " + b +
-                " batatas cada. Quantas batatas existem ao todo?",
-                resposta
-            );
+            const b =
+                (i % 12) + 2;
+
+            const resposta =
+                a * b;
+
+            pergunta =
+                criarPergunta(
+                    "Existem " +
+                    a +
+                    " grupos com " +
+                    b +
+                    " batatas cada. Quantas batatas existem ao todo?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 3) {
 
-            const divisor = (i % 8) + 2;
-            const resposta = (i % 15) + 2;
-            const total = divisor * resposta;
+            const divisor =
+                (i % 8) + 2;
 
-            pergunta = criarPergunta(
-                "Você tem " + total +
-                " batatas e divide igualmente entre " +
-                divisor +
-                " pessoas. Quantas batatas cada pessoa recebe?",
-                resposta
-            );
+            const resposta =
+                (i % 15) + 2;
+
+            const total =
+                divisor * resposta;
+
+            pergunta =
+                criarPergunta(
+                    "Você tem " +
+                    total +
+                    " batatas e divide igualmente entre " +
+                    divisor +
+                    " pessoas. Quantas batatas cada pessoa recebe?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 4) {
 
-            const numero = (i % 100) + dificuldade;
-            const resposta = numero * 2;
+            const numero =
+                (i % 100) + dificuldade;
 
-            pergunta = criarPergunta(
-                "Qual é o dobro de " + numero + "?",
-                resposta
-            );
+            const resposta =
+                numero * 2;
+
+            pergunta =
+                criarPergunta(
+                    "Qual é o dobro de " +
+                    numero +
+                    "?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 5) {
 
-            const resposta = (i % 100) + 2;
-            const numero = resposta * 2;
+            const resposta =
+                (i % 100) + 2;
 
-            pergunta = criarPergunta(
-                "Qual é a metade de " + numero + "?",
-                resposta
-            );
+            const numero =
+                resposta * 2;
+
+            pergunta =
+                criarPergunta(
+                    "Qual é a metade de " +
+                    numero +
+                    "?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 6) {
 
-            const numero = (i % 50) + 2;
-            const resposta = numero * 3;
+            const numero =
+                (i % 50) + 2;
 
-            pergunta = criarPergunta(
-                "Qual é o triplo de " + numero + "?",
-                resposta
-            );
+            const resposta =
+                numero * 3;
+
+            pergunta =
+                criarPergunta(
+                    "Qual é o triplo de " +
+                    numero +
+                    "?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 7) {
 
-            const inicio = (i % 50) + 1;
-            const passo = dificuldade;
-            const segundo = inicio + passo;
-            const resposta = segundo + passo;
+            const inicio =
+                (i % 50) + 1;
 
-            pergunta = criarPergunta(
-                "Observe a sequência: " +
-                inicio + ", " +
-                segundo +
-                ". Qual é o próximo número?",
-                resposta
-            );
+            const passo =
+                dificuldade;
+
+            const segundo =
+                inicio + passo;
+
+            const resposta =
+                segundo + passo;
+
+            pergunta =
+                criarPergunta(
+                    "Observe a sequência: " +
+                    inicio +
+                    ", " +
+                    segundo +
+                    ". Qual é o próximo número?",
+                    resposta
+                );
 
         }
+
 
         else if (tipo === 8) {
 
-            const maior = (i % 100) + 50;
-            const menor = (i % 30) + 5;
-            const resposta = maior - menor;
+            const maior =
+                (i % 100) + 50;
 
-            pergunta = criarPergunta(
-                "Qual é a diferença entre " +
-                maior +
-                " e " +
-                menor +
-                "?",
-                resposta
-            );
+            const menor =
+                (i % 30) + 5;
+
+            const resposta =
+                maior - menor;
+
+            pergunta =
+                criarPergunta(
+                    "Qual é a diferença entre " +
+                    maior +
+                    " e " +
+                    menor +
+                    "?",
+                    resposta
+                );
 
         }
+
 
         else {
 
-            const pessoas = (i % 8) + 2;
-            const batatas = pessoas * 3;
-            const resposta = batatas / pessoas;
+            const pessoas =
+                (i % 8) + 2;
 
-            pergunta = criarPergunta(
-                pessoas +
-                " pessoas recebem igualmente " +
-                batatas +
-                " batatas. Quantas batatas cada pessoa recebe?",
-                resposta
-            );
+            const batatas =
+                pessoas * 3;
+
+            const resposta =
+                batatas / pessoas;
+
+            pergunta =
+                criarPergunta(
+                    pessoas +
+                    " pessoas recebem igualmente " +
+                    batatas +
+                    " batatas. Quantas batatas cada pessoa recebe?",
+                    resposta
+                );
 
         }
+
 
         lista.push(pergunta);
 
@@ -410,21 +555,34 @@ function gerarPerguntas() {
 }
 
 
+/* =========================
+   ALTERNATIVAS
+   ========================= */
+
+
 function criarPergunta(texto, resposta) {
 
     let alternativas = [
+
         resposta,
         resposta + 1,
         resposta - 1,
         resposta + 2
+
     ];
 
-    alternativas = embaralhar(alternativas);
+    alternativas =
+        embaralhar(alternativas);
 
     return {
+
         pergunta: texto,
+
         opcoes: alternativas,
-        correta: alternativas.indexOf(resposta)
+
+        correta:
+            alternativas.indexOf(resposta)
+
     };
 
 }
@@ -432,17 +590,25 @@ function criarPergunta(texto, resposta) {
 
 function embaralhar(array) {
 
-    const novo = [...array];
+    const novo =
+        [...array];
 
-    for (let i = novo.length - 1; i > 0; i--) {
+    for (
+        let i = novo.length - 1;
+        i > 0;
+        i--
+    ) {
 
         const j =
-            Math.floor(Math.random() * (i + 1));
+            Math.floor(
+                Math.random() * (i + 1)
+            );
 
         [
             novo[i],
             novo[j]
-        ] = [
+        ] =
+        [
             novo[j],
             novo[i]
         ];
@@ -454,28 +620,88 @@ function embaralhar(array) {
 }
 
 
+/* =========================
+   INICIAR
+   ========================= */
+
+
 function iniciarJogo() {
 
-    perguntas = gerarPerguntas();
+    perguntas =
+        gerarPerguntas();
 
     faseAtual = 0;
 
     pontuacao = 0;
 
-    document.getElementById("pontuacao").textContent = pontuacao;
+    vidas = 5;
 
-    document.getElementById("fim").style.display = "none";
+    moedas = 0;
 
-    document.getElementById("jogo").style.display = "block";
+    recompensas = 0;
+
+
+    atualizarStatus();
+
+
+    document.getElementById(
+        "fim"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "jogo"
+    ).style.display =
+        "block";
+
 
     mostrarFase();
 
 }
 
 
+/* =========================
+   STATUS
+   ========================= */
+
+
+function atualizarStatus() {
+
+    document.getElementById(
+        "vidas"
+    ).textContent =
+        vidas;
+
+    document.getElementById(
+        "moedas"
+    ).textContent =
+        moedas;
+
+    document.getElementById(
+        "recompensas"
+    ).textContent =
+        recompensas;
+
+    document.getElementById(
+        "pontuacao"
+    ).textContent =
+        pontuacao;
+
+}
+
+
+/* =========================
+   MOSTRAR FASE
+   ========================= */
+
+
 function mostrarFase() {
 
-    if (faseAtual >= TOTAL_FASES) {
+    if (
+        faseAtual >= TOTAL_FASES ||
+        vidas <= 0
+    ) {
 
         finalizarJogo();
 
@@ -483,107 +709,219 @@ function mostrarFase() {
 
     }
 
-    const pergunta = perguntas[faseAtual];
 
-    document.getElementById("fase").textContent =
+    const pergunta =
+        perguntas[faseAtual];
+
+
+    document.getElementById(
+        "fase"
+    ).textContent =
         "🥔 Fase " +
         (faseAtual + 1) +
         " de 1.000";
 
-    document.getElementById("progresso").textContent =
+
+    document.getElementById(
+        "progresso"
+    ).textContent =
         "Você está na fase " +
         (faseAtual + 1) +
         " de 1.000";
 
-    const porcentagem =
-        ((faseAtual + 1) / TOTAL_FASES) * 100;
 
-    document.getElementById("barra").style.width =
+    const porcentagem =
+        ((faseAtual + 1) /
+        TOTAL_FASES) * 100;
+
+
+    document.getElementById(
+        "barra"
+    ).style.width =
         porcentagem + "%";
 
-    document.getElementById("pergunta").textContent =
+
+    document.getElementById(
+        "pergunta"
+    ).textContent =
         pergunta.pergunta;
 
+
     const opcoes =
-        document.getElementById("opcoes");
+        document.getElementById(
+            "opcoes"
+        );
+
 
     opcoes.innerHTML = "";
 
-    pergunta.opcoes.forEach(function(opcao, indice) {
 
-        const botao =
-            document.createElement("button");
+    pergunta.opcoes.forEach(
+        function(opcao, indice) {
 
-        botao.textContent = opcao;
+            const botao =
+                document.createElement(
+                    "button"
+                );
 
-        botao.onclick = function() {
+            botao.textContent =
+                opcao;
 
-            verificarResposta(indice);
+            botao.onclick =
+                function() {
 
-        };
+                    verificarResposta(
+                        indice
+                    );
 
-        opcoes.appendChild(botao);
+                };
 
-    });
+            opcoes.appendChild(
+                botao
+            );
 
-    document.getElementById("resultado").textContent = "";
+        }
+    );
+
+
+    document.getElementById(
+        "resultado"
+    ).textContent = "";
 
 }
+
+
+/* =========================
+   RESPOSTA
+   ========================= */
 
 
 function verificarResposta(indice) {
 
-    const pergunta = perguntas[faseAtual];
+    const pergunta =
+        perguntas[faseAtual];
+
 
     const botoes =
-        document.querySelectorAll("#opcoes button");
+        document.querySelectorAll(
+            "#opcoes button"
+        );
 
-    botoes.forEach(function(botao) {
 
-        botao.disabled = true;
+    botoes.forEach(
+        function(botao) {
 
-    });
+            botao.disabled =
+                true;
 
-    if (indice === pergunta.correta) {
+        }
+    );
+
+
+    if (
+        indice ===
+        pergunta.correta
+    ) {
+
 
         pontuacao++;
 
-        document.getElementById("resultado").textContent =
-            "✅ Resposta correta!";
+        moedas += 10;
+
+
+        if (
+            (faseAtual + 1) % 10 === 0
+        ) {
+
+            recompensas++;
+
+            moedas += 50;
+
+        }
+
+
+        document.getElementById(
+            "resultado"
+        ).textContent =
+            "✅ Correto! +10 moedas";
+
+
+    } else {
+
+
+        vidas--;
+
+
+        document.getElementById(
+            "resultado"
+        ).textContent =
+            "❌ Incorreto! Você perdeu 1 vida.";
 
     }
 
-    else {
 
-        document.getElementById("resultado").textContent =
-            "❌ Resposta incorreta.";
+    atualizarStatus();
 
-    }
-
-    document.getElementById("pontuacao").textContent =
-        pontuacao;
 
     faseAtual++;
 
-    setTimeout(function() {
 
-        mostrarFase();
+    setTimeout(
+        function() {
 
-    }, 700);
+            mostrarFase();
+
+        },
+        900
+    );
 
 }
+
+
+/* =========================
+   FINAL
+   ========================= */
 
 
 function finalizarJogo() {
 
-    document.getElementById("jogo").style.display = "none";
+    document.getElementById(
+        "jogo"
+    ).style.display =
+        "none";
 
-    document.getElementById("fim").style.display = "block";
 
-    document.getElementById("pontuacao-final").textContent =
+    document.getElementById(
+        "fim"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "fase-final"
+    ).textContent =
+        faseAtual;
+
+
+    document.getElementById(
+        "pontuacao-final"
+    ).textContent =
         pontuacao;
 
+
+    document.getElementById(
+        "moedas-final"
+    ).textContent =
+        moedas;
+
+
+    document.getElementById(
+        "recompensas-final"
+    ).textContent =
+        recompensas;
+
 }
+
 
 </script>
 
