@@ -1,1 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificado de Conclusão - Delta787</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #eeeeee;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        .certificado {
+            max-width: 1000px;
+            margin: auto;
+            padding: 70px;
+            background: white;
+            border: 12px double #1f2937;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .empresa {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin: 35px 0 15px;
+            letter-spacing: 3px;
+        }
+
+        .subtitulo {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+
+        .texto {
+            font-size: 19px;
+            line-height: 1.8;
+        }
+
+        .aluno {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .curso {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .horas {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .responsavel {
+            margin-top: 45px;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .codigo {
+            margin-top: 35px;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+        }
+
+        .qr {
+            margin-top: 25px;
+        }
+
+        .qr img {
+            width: 130px;
+            height: 130px;
+        }
+
+        .validacao {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .assinatura {
+            margin-top: 50px;
+        }
+
+        .linha {
+            width: 280px;
+            margin: auto;
+            border-top: 1px solid #222;
+            padding-top: 8px;
+        }
+
+        .rodape {
+            margin-top: 35px;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        @media print {
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .certificado {
+                max-width: none;
+                min-height: 100vh;
+                border: 12px double #1f2937;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="certificado">
+
+    <div class="empresa">
+        DELTA787 — SOLUÇÕES DIGITAIS
+    </div>
+
+    <h1>CERTIFICADO</h1>
+
+    <div class="subtitulo">
+        CERTIFICADO DE CONCLUSÃO
+    </div>
+
+    <div class="texto">
+
+        Certificamos que
+
+        <div class="aluno">
+            NOME COMPLETO DO ESTUDANTE
+        </div>
+
+        concluiu o curso de
+
+        <div class="curso">
+            FORMAÇÃO EM PSICANÁLISE
+        </div>
+
+        com carga horária total de
+
+        <div class="horas">
+            200 HORAS
+        </div>
+
+        tendo cumprido os requisitos estabelecidos para
+        conclusão da formação.
+
+    </div>
+
+
+    <div class="responsavel">
+
+        <strong>Responsável pela formação</strong><br>
+
+        Serafim Manuel Das Neves Pinheiro<br>
+
+        Psicanalista<br>
+
+        Número de Psicanálise:
+        <strong>NÚMERO DA PSICANÁLISE</strong>
+
+    </div>
+
+
+    <div class="assinatura">
+
+        <div class="linha">
+            Serafim Manuel Das Neves Pinheiro
+        </div>
+
+        <div>
+            Psicanalista
+        </div>
+
+    </div>
+
+
+    <div class="codigo">
+
+        <strong>Código de autenticação:</strong>
+        D787-200-000001
+
+    </div>
+
+
+    <div class="qr">
+
+        <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fdelta787.com.br%2Fverificar.html%3Fcodigo%3DD787-200-000001"
+            alt="QR Code de verificação">
+
+        <div class="validacao">
+            Escaneie o QR Code para verificar o certificado.
+        </div>
+
+    </div>
+
+
+    <div class="rodape">
+
+        Certificado emitido pela Delta787.<br>
+        Data de emissão: ____ / ____ / ______
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
