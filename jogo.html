@@ -17,7 +17,7 @@
             padding: 35px;
             text-align: center;
             background: white;
-            border-radius: 12px;
+            border-radius: 15px;
         }
 
         #descricao {
@@ -28,7 +28,7 @@
         }
 
         #fase {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             margin-bottom: 10px;
         }
@@ -39,37 +39,54 @@
         }
 
         #pergunta {
-            font-size: 22px;
+            font-size: 23px;
             margin: 30px 0;
+            line-height: 1.5;
         }
 
         #opcoes {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            max-width: 500px;
-            margin: 25px auto;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 600px;
+            margin: 30px auto;
         }
 
         #opcoes button {
-            margin: 0;
             width: 100%;
-            font-size: 18px;
+            margin: 0;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid #333;
+            background: white;
+        }
+
+        #opcoes button:hover {
+            transform: scale(1.03);
         }
 
         #opcoes button:disabled {
-            opacity: 0.6;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         #resultado {
             min-height: 35px;
-            font-size: 18px;
+            font-size: 19px;
             font-weight: bold;
+            margin: 20px 0;
+        }
+
+        #pontuacao {
+            font-size: 25px;
         }
 
         #barra-container {
             width: 100%;
-            height: 15px;
+            height: 18px;
             background: #ddd;
             border-radius: 10px;
             overflow: hidden;
@@ -89,7 +106,7 @@
             padding: 35px;
             text-align: center;
             background: white;
-            border-radius: 12px;
+            border-radius: 15px;
         }
 
         @media (max-width: 600px) {
@@ -99,8 +116,12 @@
                 padding: 20px;
             }
 
+            #opcoes {
+                grid-template-columns: 1fr;
+            }
+
             #pergunta {
-                font-size: 18px;
+                font-size: 19px;
             }
 
         }
@@ -115,11 +136,8 @@
 <nav>
 
     <a href="index.html">Início</a>
-
     <a href="sobre.html">Sobre</a>
-
     <a href="servicos.html">Serviços</a>
-
     <a href="contacto.html">Contacto</a>
 
 </nav>
@@ -146,7 +164,6 @@
 
     </div>
 
-
     <button onclick="iniciarJogo()">
         Começar o jogo
     </button>
@@ -157,40 +174,28 @@
 <section id="jogo">
 
     <div id="fase">
-        Fase 1 de 1.000
+        🥔 Fase 1 de 1.000
     </div>
 
     <div id="progresso">
-        Preparado para começar?
+        Você está na fase 1 de 1.000
     </div>
-
 
     <div id="barra-container">
-
         <div id="barra"></div>
-
     </div>
 
-
     <p id="pergunta">
-
         Clique em "Começar o jogo" para iniciar.
-
     </p>
-
 
     <div id="opcoes"></div>
 
-
     <p id="resultado"></p>
 
-
     <p>
-
         Pontuação:
-
         <strong id="pontuacao">0</strong>
-
     </p>
 
 </section>
@@ -227,7 +232,6 @@
 
 <script>
 
-
 const TOTAL_FASES = 1000;
 
 let faseAtual = 0;
@@ -237,464 +241,241 @@ let pontuacao = 0;
 let perguntas = [];
 
 
-/* =====================================================
-   GERAR 1.000 FASES
-   ===================================================== */
-
-
 function gerarPerguntas() {
 
     const lista = [];
 
+    for (let i = 1; i <= TOTAL_FASES; i++) {
 
-    for (
-        let i = 1;
-        i <= TOTAL_FASES;
-        i++
-    ) {
+        const dificuldade = Math.ceil(i / 200);
 
-
-        const dificuldade =
-            Math.ceil(i / 200);
-
-
-        const tipo =
-            i % 10;
-
+        const tipo = i % 10;
 
         let pergunta;
 
 
-        /* ADIÇÃO */
-
         if (tipo === 0) {
 
-            const a =
-                i + dificuldade;
+            const a = i + dificuldade;
+            const b = (i % 20) + dificuldade;
+            const resposta = a + b;
 
-            const b =
-                (i % 20) + dificuldade;
-
-            const resposta =
-                a + b;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Você tem " +
-                    a +
-                    " batatas e recebe mais " +
-                    b +
-                    ". Quantas batatas você tem agora?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Você tem " + a +
+                " batatas e recebe mais " + b +
+                ". Quantas batatas você tem agora?",
+                resposta
+            );
 
         }
-
-
-        /* SUBTRAÇÃO */
 
         else if (tipo === 1) {
 
-            const a =
-                i + 30 + dificuldade;
+            const a = i + 30 + dificuldade;
+            const b = (i % 20) + dificuldade;
+            const resposta = a - b;
 
-            const b =
-                (i % 20) + dificuldade;
-
-            const resposta =
-                a - b;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Uma cesta tem " +
-                    a +
-                    " batatas. Você retira " +
-                    b +
-                    ". Quantas batatas restam?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Uma cesta tem " + a +
+                " batatas. Você retira " + b +
+                ". Quantas batatas restam?",
+                resposta
+            );
 
         }
-
-
-        /* MULTIPLICAÇÃO */
 
         else if (tipo === 2) {
 
-            const a =
-                (i % 10) + 2;
+            const a = (i % 10) + 2;
+            const b = (i % 12) + 2;
+            const resposta = a * b;
 
-            const b =
-                (i % 12) + 2;
-
-            const resposta =
-                a * b;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Existem " +
-                    a +
-                    " grupos com " +
-                    b +
-                    " batatas cada. Quantas batatas existem ao todo?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Existem " + a +
+                " grupos com " + b +
+                " batatas cada. Quantas batatas existem ao todo?",
+                resposta
+            );
 
         }
-
-
-        /* DIVISÃO */
 
         else if (tipo === 3) {
 
-            const divisor =
-                (i % 8) + 2;
+            const divisor = (i % 8) + 2;
+            const resposta = (i % 15) + 2;
+            const total = divisor * resposta;
 
-            const resposta =
-                (i % 15) + 2;
-
-            const total =
-                divisor * resposta;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Você tem " +
-                    total +
-                    " batatas e divide igualmente entre " +
-                    divisor +
-                    " pessoas. Quantas batatas cada pessoa recebe?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Você tem " + total +
+                " batatas e divide igualmente entre " +
+                divisor +
+                " pessoas. Quantas batatas cada pessoa recebe?",
+                resposta
+            );
 
         }
-
-
-        /* DOBRO */
 
         else if (tipo === 4) {
 
-            const numero =
-                (i % 100) + dificuldade;
+            const numero = (i % 100) + dificuldade;
+            const resposta = numero * 2;
 
-            const resposta =
-                numero * 2;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Qual é o dobro de " +
-                    numero +
-                    "?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Qual é o dobro de " + numero + "?",
+                resposta
+            );
 
         }
-
-
-        /* METADE */
 
         else if (tipo === 5) {
 
-            const resposta =
-                (i % 100) + 2;
+            const resposta = (i % 100) + 2;
+            const numero = resposta * 2;
 
-            const numero =
-                resposta * 2;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Qual é a metade de " +
-                    numero +
-                    "?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Qual é a metade de " + numero + "?",
+                resposta
+            );
 
         }
-
-
-        /* TRIPLO */
 
         else if (tipo === 6) {
 
-            const numero =
-                (i % 50) + 2;
+            const numero = (i % 50) + 2;
+            const resposta = numero * 3;
 
-            const resposta =
-                numero * 3;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Qual é o triplo de " +
-                    numero +
-                    "?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Qual é o triplo de " + numero + "?",
+                resposta
+            );
 
         }
-
-
-        /* SEQUÊNCIA */
 
         else if (tipo === 7) {
 
-            const inicio =
-                (i % 50) + 1;
+            const inicio = (i % 50) + 1;
+            const passo = dificuldade;
+            const segundo = inicio + passo;
+            const resposta = segundo + passo;
 
-            const passo =
-                dificuldade;
-
-            const segundo =
-                inicio + passo;
-
-            const resposta =
-                segundo + passo;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Observe a sequência: " +
-                    inicio +
-                    ", " +
-                    segundo +
-                    ". Qual é o próximo número?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Observe a sequência: " +
+                inicio + ", " +
+                segundo +
+                ". Qual é o próximo número?",
+                resposta
+            );
 
         }
-
-
-        /* DIFERENÇA */
 
         else if (tipo === 8) {
 
-            const maior =
-                (i % 100) + 50;
+            const maior = (i % 100) + 50;
+            const menor = (i % 30) + 5;
+            const resposta = maior - menor;
 
-            const menor =
-                (i % 30) + 5;
-
-            const resposta =
-                maior - menor;
-
-
-            pergunta =
-                criarPergunta(
-
-                    "Qual é a diferença entre " +
-                    maior +
-                    " e " +
-                    menor +
-                    "?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                "Qual é a diferença entre " +
+                maior +
+                " e " +
+                menor +
+                "?",
+                resposta
+            );
 
         }
-
-
-        /* LÓGICA */
 
         else {
 
-            const pessoas =
-                (i % 8) + 2;
+            const pessoas = (i % 8) + 2;
+            const batatas = pessoas * 3;
+            const resposta = batatas / pessoas;
 
-            const batatas =
-                pessoas * 3;
-
-            const resposta =
-                batatas / pessoas;
-
-
-            pergunta =
-                criarPergunta(
-
-                    pessoas +
-                    " pessoas recebem igualmente " +
-                    batatas +
-                    " batatas. Quantas batatas cada pessoa recebe?",
-
-                    resposta
-
-                );
+            pergunta = criarPergunta(
+                pessoas +
+                " pessoas recebem igualmente " +
+                batatas +
+                " batatas. Quantas batatas cada pessoa recebe?",
+                resposta
+            );
 
         }
-
 
         lista.push(pergunta);
 
     }
-
 
     return lista;
 
 }
 
 
-/* =====================================================
-   CRIAR ALTERNATIVAS
-   ===================================================== */
-
-
 function criarPergunta(texto, resposta) {
 
-
-    const alternativas = [
-
+    let alternativas = [
         resposta,
-
         resposta + 1,
-
         resposta - 1,
-
         resposta + 2
-
     ];
 
-
-    const embaralhadas =
-        embaralhar(alternativas);
-
+    alternativas = embaralhar(alternativas);
 
     return {
-
         pergunta: texto,
-
-        opcoes:
-            embaralhadas.map(String),
-
-        correta:
-            embaralhadas.indexOf(resposta)
-
+        opcoes: alternativas,
+        correta: alternativas.indexOf(resposta)
     };
 
 }
 
 
-/* =====================================================
-   EMBARALHAR
-   ===================================================== */
-
-
 function embaralhar(array) {
 
+    const novo = [...array];
 
-    const novo =
-        [...array];
-
-
-    for (
-        let i = novo.length - 1;
-        i > 0;
-        i--
-    ) {
-
+    for (let i = novo.length - 1; i > 0; i--) {
 
         const j =
-            Math.floor(
-                Math.random() * (i + 1)
-            );
-
+            Math.floor(Math.random() * (i + 1));
 
         [
             novo[i],
             novo[j]
-        ] =
-        [
+        ] = [
             novo[j],
             novo[i]
         ];
 
     }
 
-
     return novo;
 
 }
 
 
-/* =====================================================
-   INICIAR
-   ===================================================== */
-
-
 function iniciarJogo() {
 
-
-    perguntas =
-        gerarPerguntas();
-
+    perguntas = gerarPerguntas();
 
     faseAtual = 0;
 
     pontuacao = 0;
 
+    document.getElementById("pontuacao").textContent = pontuacao;
 
-    document.getElementById(
-        "pontuacao"
-    ).textContent =
-        pontuacao;
+    document.getElementById("fim").style.display = "none";
 
-
-    document.getElementById(
-        "fim"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "jogo"
-    ).style.display =
-        "block";
-
+    document.getElementById("jogo").style.display = "block";
 
     mostrarFase();
 
 }
 
 
-/* =====================================================
-   MOSTRAR FASE
-   ===================================================== */
-
-
 function mostrarFase() {
 
-
-    if (
-        faseAtual >= TOTAL_FASES
-    ) {
+    if (faseAtual >= TOTAL_FASES) {
 
         finalizarJogo();
 
@@ -702,208 +483,107 @@ function mostrarFase() {
 
     }
 
+    const pergunta = perguntas[faseAtual];
 
-    const pergunta =
-        perguntas[faseAtual];
-
-
-    document.getElementById(
-        "fase"
-    ).textContent =
-
+    document.getElementById("fase").textContent =
         "🥔 Fase " +
         (faseAtual + 1) +
-        " de " +
-        TOTAL_FASES;
+        " de 1.000";
 
-
-    document.getElementById(
-        "progresso"
-    ).textContent =
-
+    document.getElementById("progresso").textContent =
         "Você está na fase " +
         (faseAtual + 1) +
         " de 1.000";
 
-
     const porcentagem =
+        ((faseAtual + 1) / TOTAL_FASES) * 100;
 
-        (
-            faseAtual /
-            TOTAL_FASES
-        ) * 100;
-
-
-    document.getElementById(
-        "barra"
-    ).style.width =
+    document.getElementById("barra").style.width =
         porcentagem + "%";
 
-
-    document.getElementById(
-        "pergunta"
-    ).textContent =
+    document.getElementById("pergunta").textContent =
         pergunta.pergunta;
 
-
     const opcoes =
-        document.getElementById(
-            "opcoes"
-        );
-
+        document.getElementById("opcoes");
 
     opcoes.innerHTML = "";
 
+    pergunta.opcoes.forEach(function(opcao, indice) {
 
-    pergunta.opcoes.forEach(
+        const botao =
+            document.createElement("button");
 
-        function(opcao, indice) {
+        botao.textContent = opcao;
 
+        botao.onclick = function() {
 
-            const botao =
-                document.createElement(
-                    "button"
-                );
+            verificarResposta(indice);
 
+        };
 
-            botao.textContent =
-                opcao;
+        opcoes.appendChild(botao);
 
+    });
 
-            botao.onclick =
-                function() {
-
-                    verificarResposta(
-                        indice
-                    );
-
-                };
-
-
-            opcoes.appendChild(
-                botao
-            );
-
-        }
-
-    );
-
-
-    document.getElementById(
-        "resultado"
-    ).textContent = "";
+    document.getElementById("resultado").textContent = "";
 
 }
-
-
-/* =====================================================
-   VERIFICAR
-   ===================================================== */
 
 
 function verificarResposta(indice) {
 
-
-    const pergunta =
-        perguntas[faseAtual];
-
+    const pergunta = perguntas[faseAtual];
 
     const botoes =
-        document.querySelectorAll(
-            "#opcoes button"
-        );
+        document.querySelectorAll("#opcoes button");
 
+    botoes.forEach(function(botao) {
 
-    botoes.forEach(
+        botao.disabled = true;
 
-        function(botao) {
+    });
 
-            botao.disabled =
-                true;
-
-        }
-
-    );
-
-
-    if (
-        indice ===
-        pergunta.correta
-    ) {
-
+    if (indice === pergunta.correta) {
 
         pontuacao++;
 
-
-        document.getElementById(
-            "resultado"
-        ).textContent =
+        document.getElementById("resultado").textContent =
             "✅ Resposta correta!";
-
-
-    } else {
-
-
-        document.getElementById(
-            "resultado"
-        ).textContent =
-            "❌ Resposta incorreta.";
-
 
     }
 
+    else {
 
-    document.getElementById(
-        "pontuacao"
-    ).textContent =
+        document.getElementById("resultado").textContent =
+            "❌ Resposta incorreta.";
+
+    }
+
+    document.getElementById("pontuacao").textContent =
         pontuacao;
-
 
     faseAtual++;
 
+    setTimeout(function() {
 
-    setTimeout(
+        mostrarFase();
 
-        function() {
-
-            mostrarFase();
-
-        },
-
-        700
-
-    );
+    }, 700);
 
 }
-
-
-/* =====================================================
-   FINAL
-   ===================================================== */
 
 
 function finalizarJogo() {
 
+    document.getElementById("jogo").style.display = "none";
 
-    document.getElementById(
-        "jogo"
-    ).style.display =
-        "none";
+    document.getElementById("fim").style.display = "block";
 
-
-    document.getElementById(
-        "fim"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "pontuacao-final"
-    ).textContent =
+    document.getElementById("pontuacao-final").textContent =
         pontuacao;
 
 }
-
 
 </script>
 
