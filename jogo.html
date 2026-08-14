@@ -26,9 +26,19 @@
 
 }
 
-#loja {
+#loja,
+#fim {
 
     display: none;
+
+}
+
+#descricao {
+
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.7;
+    font-size: 17px;
 
 }
 
@@ -51,14 +61,6 @@
 
 }
 
-#descricao {
-
-    max-width: 800px;
-    margin: 20px auto;
-    line-height: 1.7;
-
-}
-
 #fase {
 
     font-size: 26px;
@@ -66,10 +68,18 @@
 
 }
 
+#progresso {
+
+    font-weight: bold;
+    margin: 15px 0;
+
+}
+
 #pergunta {
 
     font-size: 22px;
     margin: 30px 0;
+    line-height: 1.5;
 
 }
 
@@ -85,6 +95,7 @@
 
 #opcoes button {
 
+    width: 100%;
     padding: 18px;
     font-size: 20px;
     font-weight: bold;
@@ -104,6 +115,7 @@
 
     min-height: 30px;
     font-weight: bold;
+    font-size: 18px;
 
 }
 
@@ -128,11 +140,11 @@
 
 .loja-item {
 
+    max-width: 550px;
+    margin: 15px auto;
+    padding: 20px;
     border: 2px solid #ccc;
     border-radius: 12px;
-    padding: 20px;
-    margin: 15px auto;
-    max-width: 500px;
 
 }
 
@@ -142,26 +154,27 @@
 
 }
 
+.loja-item p {
+
+    font-size: 18px;
+
+}
+
 .loja-item button {
 
     padding: 12px 25px;
     font-size: 17px;
     font-weight: bold;
-    cursor: pointer;
     border-radius: 8px;
+    cursor: pointer;
 
 }
 
 #mensagem-loja {
 
     min-height: 30px;
+    margin: 20px;
     font-weight: bold;
-
-}
-
-#fim {
-
-    display: none;
 
 }
 
@@ -338,12 +351,12 @@ Clique em "Começar o jogo" para iniciar.
 <section id="loja">
 
 
-<h2>🛒 Loja da Lógica das Batatas</h2>
+<h2>🛒 Loja de Moedas</h2>
 
 
 <p>
 
-Use suas moedas para adquirir itens dentro do jogo.
+Escolha um pacote de moedas.
 
 </p>
 
@@ -351,6 +364,7 @@ Use suas moedas para adquirir itens dentro do jogo.
 <div class="status-item">
 
 🪙 Suas moedas:
+
 <strong id="moedas-loja">0</strong>
 
 </div>
@@ -359,23 +373,13 @@ Use suas moedas para adquirir itens dentro do jogo.
 
 <div class="loja-item">
 
-<h3>❤️ +1 Vida</h3>
+<h3>🪙 Pacote de R$ 1,00</h3>
 
-<p>
+<p>100 moedas</p>
 
-Recupere uma vida.
+<button onclick="comprarPacote(1, 100)">
 
-</p>
-
-<p>
-
-🪙 Custo: <strong>30 moedas</strong>
-
-</p>
-
-<button onclick="comprarVida()">
-
-Comprar
+Comprar — R$ 1,00
 
 </button>
 
@@ -385,23 +389,13 @@ Comprar
 
 <div class="loja-item">
 
-<h3>❤️❤️❤️ +3 Vidas</h3>
+<h3>🪙 Pacote de R$ 2,00</h3>
 
-<p>
+<p>250 moedas</p>
 
-Adicione três vidas.
+<button onclick="comprarPacote(2, 250)">
 
-</p>
-
-<p>
-
-🪙 Custo: <strong>80 moedas</strong>
-
-</p>
-
-<button onclick="comprarTresVidas()">
-
-Comprar
+Comprar — R$ 2,00
 
 </button>
 
@@ -411,23 +405,109 @@ Comprar
 
 <div class="loja-item">
 
-<h3>🏆 Recompensa Especial</h3>
+<h3>🪙 Pacote de R$ 3,00</h3>
 
-<p>
+<p>400 moedas</p>
 
-Troque moedas por uma recompensa.
+<button onclick="comprarPacote(3, 400)">
 
-</p>
+Comprar — R$ 3,00
 
-<p>
+</button>
 
-🪙 Custo: <strong>100 moedas</strong>
+</div>
 
-</p>
 
-<button onclick="comprarRecompensa()">
 
-Comprar
+<div class="loja-item">
+
+<h3>🪙 Pacote de R$ 4,00</h3>
+
+<p>550 moedas</p>
+
+<button onclick="comprarPacote(4, 550)">
+
+Comprar — R$ 4,00
+
+</button>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>🪙 Pacote de R$ 5,00</h3>
+
+<p>700 moedas</p>
+
+<button onclick="comprarPacote(5, 700)">
+
+Comprar — R$ 5,00
+
+</button>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>🪙 Pacote de R$ 10,00</h3>
+
+<p>1.500 moedas</p>
+
+<button onclick="comprarPacote(10, 1500)">
+
+Comprar — R$ 10,00
+
+</button>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>🪙 Pacote de R$ 20,00</h3>
+
+<p>3.500 moedas</p>
+
+<button onclick="comprarPacote(20, 3500)">
+
+Comprar — R$ 20,00
+
+</button>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>🪙 Pacote de R$ 50,00</h3>
+
+<p>10.000 moedas</p>
+
+<button onclick="comprarPacote(50, 10000)">
+
+Comprar — R$ 50,00
+
+</button>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>🪙 Pacote de R$ 100,00</h3>
+
+<p>22.000 moedas</p>
+
+<button onclick="comprarPacote(100, 22000)">
+
+Comprar — R$ 100,00
 
 </button>
 
@@ -550,9 +630,7 @@ for (let i = 1; i <= TOTAL_FASES; i++) {
 const dificuldade =
 Math.ceil(i / 200);
 
-
 const tipo = i % 10;
-
 
 let pergunta;
 
@@ -841,7 +919,6 @@ lista.push(pergunta);
 
 return lista;
 
-
 }
 
 
@@ -925,7 +1002,6 @@ novo[i]
 
 
 return novo;
-
 
 }
 
@@ -1096,7 +1172,6 @@ opcoes.appendChild(botao);
 
 
 }
-
 
 );
 
@@ -1276,123 +1351,24 @@ atualizarStatus();
 
 
 /* ==============================
-   COMPRAR 1 VIDA
+   PACOTES DE MOEDAS
 ============================== */
 
 
-function comprarVida() {
+function comprarPacote(valor, quantidade) {
 
 
-if (moedas < 30) {
-
-
-mostrarMensagem(
-
-"❌ Você precisa de 30 moedas."
-
-);
-
-return;
-
-
-}
-
-
-moedas -= 30;
-
-vidas++;
-
-
-atualizarStatus();
+const valorFormatado =
+valor.toFixed(2).replace(".", ",");
 
 
 mostrarMensagem(
 
-"❤️ Você comprou 1 vida!"
-
-);
-
-
-}
-
-
-
-/* ==============================
-   COMPRAR 3 VIDAS
-============================== */
-
-
-function comprarTresVidas() {
-
-
-if (moedas < 80) {
-
-
-mostrarMensagem(
-
-"❌ Você precisa de 80 moedas."
-
-);
-
-return;
-
-
-}
-
-
-moedas -= 80;
-
-vidas += 3;
-
-
-atualizarStatus();
-
-
-mostrarMensagem(
-
-"❤️❤️❤️ Você comprou 3 vidas!"
-
-);
-
-
-}
-
-
-
-/* ==============================
-   COMPRAR RECOMPENSA
-============================== */
-
-
-function comprarRecompensa() {
-
-
-if (moedas < 100) {
-
-
-mostrarMensagem(
-
-"❌ Você precisa de 100 moedas."
-
-);
-
-return;
-
-
-}
-
-
-moedas -= 100;
-
-recompensas++;
-
-
-atualizarStatus();
-
-
-mostrarMensagem(
-
-"🏆 Você recebeu uma recompensa!"
+"💳 Pacote selecionado: R$ " +
+valorFormatado +
+" — " +
+quantidade +
+" moedas. O pagamento será integrado posteriormente."
 
 );
 
@@ -1464,4 +1440,3 @@ recompensas;
 </body>
 
 </html>
-      
