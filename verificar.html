@@ -15,11 +15,8 @@
 <nav>
 
     <a href="index.html">Início</a>
-
     <a href="sobre.html">Sobre</a>
-
     <a href="servicos.html">Serviços</a>
-
     <a href="contacto.html">Contacto</a>
 
 </nav>
@@ -36,33 +33,9 @@
 </header>
 
 
-<section>
+<section id="resultado">
 
-    <h2>Certificado</h2>
-
-    <p>
-        <strong>Código:</strong> D787-200-000001
-    </p>
-
-    <p>
-        <strong>Aluno:</strong> NOME COMPLETO DO ESTUDANTE
-    </p>
-
-    <p>
-        <strong>Curso:</strong> Formação em Psicanálise
-    </p>
-
-    <p>
-        <strong>Carga horária:</strong> 200 horas
-    </p>
-
-    <p>
-        <strong>Responsável:</strong> Serafim Manuel Das Neves Pinheiro
-    </p>
-
-    <p>
-        <strong>Status:</strong> Certificado registrado
-    </p>
+    <p>Verificando certificado...</p>
 
 </section>
 
@@ -74,6 +47,105 @@
     </p>
 
 </footer>
+
+
+<script>
+
+const parametros = new URLSearchParams(window.location.search);
+
+const codigo = parametros.get("codigo");
+
+const resultado = document.getElementById("resultado");
+
+
+if (!codigo) {
+
+    resultado.innerHTML = `
+        <h2>Código não informado</h2>
+        <p>Não foi informado um código de certificado.</p>
+    `;
+
+} else {
+
+    fetch("certificados.json")
+
+        .then(resposta => resposta.json())
+
+        .then(certificados => {
+
+            const certificado = certificados[codigo];
+
+            if (!certificado) {
+
+                resultado.innerHTML = `
+                    <h2>❌ Certificado não encontrado</h2>
+                    <p>
+                        O código <strong>${codigo}</strong>
+                        não corresponde a um certificado registrado.
+                    </p>
+                `;
+
+                return;
+            }
+
+
+            resultado.innerHTML = `
+
+                <h2>✅ Certificado válido</h2>
+
+                <p>
+                    <strong>Código:</strong>
+                    ${codigo}
+                </p>
+
+                <p>
+                    <strong>Aluno:</strong>
+                    ${certificado.aluno}
+                </p>
+
+                <p>
+                    <strong>Curso:</strong>
+                    ${certificado.curso}
+                </p>
+
+                <p>
+                    <strong>Carga horária:</strong>
+                    ${certificado.carga_horaria}
+                </p>
+
+                <p>
+                    <strong>Responsável:</strong>
+                    ${certificado.responsavel}
+                </p>
+
+                <p>
+                    <strong>Data de emissão:</strong>
+                    ${certificado.data_emissao}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    ${certificado.status}
+                </p>
+
+            `;
+
+        })
+
+        .catch(erro => {
+
+            resultado.innerHTML = `
+                <h2>Erro na verificação</h2>
+                <p>
+                    Não foi possível consultar o registro do certificado.
+                </p>
+            `;
+
+        });
+
+}
+
+</script>
 
 
 </body>
