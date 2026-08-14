@@ -8,6 +8,43 @@
     <title>A Lógica das Batatas - Delta787</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        #jogo {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+        }
+
+        #opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 400px;
+            margin: 25px auto;
+        }
+
+        #opcoes button {
+            margin: 0;
+            width: 100%;
+        }
+
+        #resultado {
+            min-height: 30px;
+            font-weight: bold;
+        }
+
+        #progresso {
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -40,6 +77,10 @@
 <section id="jogo">
 
     <h2>Desafio</h2>
+
+    <p id="progresso">
+        Preparado para começar?
+    </p>
 
     <p id="pergunta">
         Clique em "Começar o jogo" para iniciar.
@@ -91,6 +132,60 @@ const perguntas = [
         pergunta: "Qual número vem depois de 9?",
         opcoes: ["8", "10", "11"],
         correta: 1
+    },
+
+    {
+        pergunta: "Uma cesta tem 12 batatas. Você retira 4. Quantas ficam?",
+        opcoes: ["6", "8", "10"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Se 2 pessoas têm 5 batatas cada uma, quantas batatas existem ao todo?",
+        opcoes: ["7", "10", "12"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Qual é o dobro de 6?",
+        opcoes: ["10", "12", "14"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Você tem 20 batatas e divide igualmente entre 4 pessoas. Quantas cada pessoa recebe?",
+        opcoes: ["4", "5", "6"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Qual número é maior?",
+        opcoes: ["15", "12", "9"],
+        correta: 0
+    },
+
+    {
+        pergunta: "Se uma batata custa 2 reais, quanto custam 5 batatas?",
+        opcoes: ["8 reais", "10 reais", "12 reais"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Você tem 15 batatas e recebe mais 5. Quantas possui agora?",
+        opcoes: ["18", "20", "25"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Qual é a metade de 20?",
+        opcoes: ["5", "10", "15"],
+        correta: 1
+    },
+
+    {
+        pergunta: "Se existem 30 batatas e você tira 10, quantas restam?",
+        opcoes: ["10", "20", "25"],
+        correta: 1
     }
 
 ];
@@ -104,6 +199,8 @@ function iniciarJogo() {
 
     document.getElementById("pontuacao").textContent = pontuacao;
 
+    document.getElementById("resultado").textContent = "";
+
     mostrarPergunta();
 
 }
@@ -113,19 +210,20 @@ function mostrarPergunta() {
 
     if (perguntaAtual >= perguntas.length) {
 
-        document.getElementById("pergunta").textContent =
-            "Fim do jogo!";
-
-        document.getElementById("opcoes").innerHTML = "";
-
-        document.getElementById("resultado").textContent =
-            "Sua pontuação final foi: " + pontuacao;
+        finalizarJogo();
 
         return;
+
     }
 
 
     const pergunta = perguntas[perguntaAtual];
+
+
+    document.getElementById("progresso").textContent =
+        "Pergunta " + (perguntaAtual + 1) +
+        " de " + perguntas.length;
+
 
     document.getElementById("pergunta").textContent =
         pergunta.pergunta;
@@ -163,6 +261,17 @@ function verificarResposta(indice) {
     const pergunta = perguntas[perguntaAtual];
 
 
+    const botoes =
+        document.querySelectorAll("#opcoes button");
+
+
+    botoes.forEach(function(botao) {
+
+        botao.disabled = true;
+
+    });
+
+
     if (indice === pergunta.correta) {
 
         pontuacao++;
@@ -189,7 +298,30 @@ function verificarResposta(indice) {
 
         mostrarPergunta();
 
-    }, 800);
+    }, 900);
+
+}
+
+
+function finalizarJogo() {
+
+    document.getElementById("progresso").textContent =
+        "Jogo terminado!";
+
+
+    document.getElementById("pergunta").textContent =
+        "Parabéns! Você chegou ao final.";
+
+
+    document.getElementById("opcoes").innerHTML = "";
+
+
+    document.getElementById("resultado").textContent =
+        "Pontuação final: " +
+        pontuacao +
+        " de " +
+        perguntas.length;
+
 
 }
 
