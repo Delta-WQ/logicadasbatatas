@@ -2,289 +2,522 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>A Lógica das Batatas - Delta787</title>
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>A Lógica das Batatas - Delta787</title>
 
-        #jogo {
-            max-width: 850px;
-            margin: 40px auto;
-            padding: 35px;
-            text-align: center;
-            background: white;
-            border-radius: 15px;
-        }
+<link rel="stylesheet" href="style.css">
 
-        #descricao {
-            max-width: 800px;
-            margin: 20px auto;
-            line-height: 1.7;
-            font-size: 17px;
-        }
+<style>
 
-        #status {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin: 25px 0;
-            font-size: 20px;
-            font-weight: bold;
-        }
+#jogo,
+#loja,
+#fim {
 
-        .status-item {
-            padding: 12px 20px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-        }
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 30px;
+    text-align: center;
+    background: white;
+    border-radius: 15px;
 
-        #fase {
-            font-size: 26px;
-            font-weight: bold;
-        }
+}
 
-        #progresso {
-            font-weight: bold;
-            margin: 15px 0;
-        }
+#loja {
 
-        #pergunta {
-            font-size: 23px;
-            margin: 30px 0;
-            line-height: 1.5;
-        }
+    display: none;
 
-        #opcoes {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            max-width: 600px;
-            margin: 30px auto;
-        }
+}
 
-        #opcoes button {
-            width: 100%;
-            margin: 0;
-            padding: 18px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            border: 2px solid #333;
-            background: white;
-        }
+#status {
 
-        #opcoes button:hover {
-            transform: scale(1.03);
-        }
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 25px 0;
 
-        #opcoes button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
+}
 
-        #resultado {
-            min-height: 35px;
-            font-size: 19px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
+.status-item {
 
-        #barra-container {
-            width: 100%;
-            height: 18px;
-            background: #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
+    padding: 12px 18px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-weight: bold;
 
-        #barra {
-            width: 0%;
-            height: 100%;
-            transition: width 0.3s;
-        }
+}
 
-        #fim {
-            display: none;
-            max-width: 850px;
-            margin: 40px auto;
-            padding: 35px;
-            text-align: center;
-            background: white;
-            border-radius: 15px;
-        }
+#descricao {
 
-        @media (max-width: 600px) {
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.7;
 
-            #jogo {
-                margin: 20px 10px;
-                padding: 20px;
-            }
+}
 
-            #opcoes {
-                grid-template-columns: 1fr;
-            }
+#fase {
 
-            #pergunta {
-                font-size: 19px;
-            }
+    font-size: 26px;
+    font-weight: bold;
 
-        }
+}
 
-    </style>
+#pergunta {
+
+    font-size: 22px;
+    margin: 30px 0;
+
+}
+
+#opcoes {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    max-width: 600px;
+    margin: 30px auto;
+
+}
+
+#opcoes button {
+
+    padding: 18px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+#opcoes button:disabled {
+
+    opacity: 0.6;
+    cursor: not-allowed;
+
+}
+
+#resultado {
+
+    min-height: 30px;
+    font-weight: bold;
+
+}
+
+#barra-container {
+
+    width: 100%;
+    height: 18px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+
+}
+
+#barra {
+
+    width: 0%;
+    height: 100%;
+    transition: width 0.3s;
+
+}
+
+.loja-item {
+
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 500px;
+
+}
+
+.loja-item h3 {
+
+    margin-top: 0;
+
+}
+
+.loja-item button {
+
+    padding: 12px 25px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+
+}
+
+#mensagem-loja {
+
+    min-height: 30px;
+    font-weight: bold;
+
+}
+
+#fim {
+
+    display: none;
+
+}
+
+@media (max-width: 600px) {
+
+    #opcoes {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    #jogo,
+    #loja,
+    #fim {
+
+        margin: 20px 10px;
+        padding: 20px;
+
+    }
+
+}
+
+</style>
 
 </head>
+
 
 <body>
 
 
 <nav>
 
-    <a href="index.html">Início</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="servicos.html">Serviços</a>
-    <a href="contacto.html">Contacto</a>
+<a href="index.html">Início</a>
+
+<a href="sobre.html">Sobre</a>
+
+<a href="servicos.html">Serviços</a>
+
+<a href="contacto.html">Contacto</a>
 
 </nav>
 
 
 <header>
 
-    <h1>🥔 A Lógica das Batatas</h1>
+<h1>🥔 A Lógica das Batatas</h1>
 
-    <div id="descricao">
 
-        <p>
-            <strong>A Lógica das Batatas</strong> é um jogo para todas as idades,
-            criado para desafiar o raciocínio, estimular a atenção e testar
-            conhecimentos de forma divertida.
-        </p>
+<div id="descricao">
 
-        <p>
-            Para crianças, também pode contribuir para o desenvolvimento de
-            habilidades importantes, como concentração, raciocínio lógico,
-            memória e resolução de problemas, podendo ser utilizado como uma
-            atividade complementar aos estudos.
-        </p>
+<p>
 
-    </div>
+<strong>A Lógica das Batatas</strong> é um jogo para todas as idades,
+criado para desafiar o raciocínio, estimular a atenção e testar
+conhecimentos de forma divertida.
 
-    <button onclick="iniciarJogo()">
-        Começar o jogo
-    </button>
+</p>
+
+<p>
+
+Para crianças, também pode contribuir para o desenvolvimento de
+habilidades importantes, como concentração, raciocínio lógico,
+memória e resolução de problemas, podendo ser utilizado como uma
+atividade complementar aos estudos.
+
+</p>
+
+</div>
+
+
+<button onclick="iniciarJogo()">
+
+Começar o jogo
+
+</button>
+
+
+<button onclick="abrirLoja()">
+
+🛒 Loja
+
+</button>
 
 </header>
+
 
 
 <section id="jogo">
 
 
-    <div id="status">
-
-        <div class="status-item">
-            ❤️ Vidas:
-            <span id="vidas">5</span>
-        </div>
-
-        <div class="status-item">
-            🪙 Moedas:
-            <span id="moedas">0</span>
-        </div>
-
-        <div class="status-item">
-            🏆 Recompensas:
-            <span id="recompensas">0</span>
-        </div>
-
-    </div>
+<div id="status">
 
 
-    <div id="fase">
-        🥔 Fase 1 de 1.000
-    </div>
+<div class="status-item">
+
+❤️ Vidas:
+<span id="vidas">5</span>
+
+</div>
 
 
-    <div id="progresso">
-        Você está na fase 1 de 1.000
-    </div>
+<div class="status-item">
+
+🪙 Moedas:
+<span id="moedas">0</span>
+
+</div>
 
 
-    <div id="barra-container">
+<div class="status-item">
 
-        <div id="barra"></div>
+🏆 Recompensas:
+<span id="recompensas">0</span>
 
-    </div>
-
-
-    <p id="pergunta">
-        Clique em "Começar o jogo" para iniciar.
-    </p>
+</div>
 
 
-    <div id="opcoes"></div>
+<div class="status-item">
+
+⭐ Pontos:
+<span id="pontuacao">0</span>
+
+</div>
 
 
-    <p id="resultado"></p>
+</div>
 
 
-    <p>
-        Pontuação:
-        <strong id="pontuacao">0</strong>
-    </p>
+<div id="fase">
+
+🥔 Fase 1 de 1.000
+
+</div>
+
+
+<p id="progresso">
+
+Você está na fase 1 de 1.000
+
+</p>
+
+
+<div id="barra-container">
+
+<div id="barra"></div>
+
+</div>
+
+
+<p id="pergunta">
+
+Clique em "Começar o jogo" para iniciar.
+
+</p>
+
+
+<div id="opcoes"></div>
+
+
+<p id="resultado"></p>
+
+
+<button onclick="abrirLoja()">
+
+🛒 Abrir Loja
+
+</button>
+
 
 </section>
+
+
+
+<section id="loja">
+
+
+<h2>🛒 Loja da Lógica das Batatas</h2>
+
+
+<p>
+
+Use suas moedas para adquirir itens dentro do jogo.
+
+</p>
+
+
+<div class="status-item">
+
+🪙 Suas moedas:
+<strong id="moedas-loja">0</strong>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>❤️ +1 Vida</h3>
+
+<p>
+
+Recupere uma vida.
+
+</p>
+
+<p>
+
+🪙 Custo: <strong>30 moedas</strong>
+
+</p>
+
+<button onclick="comprarVida()">
+
+Comprar
+
+</button>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>❤️❤️❤️ +3 Vidas</h3>
+
+<p>
+
+Adicione três vidas.
+
+</p>
+
+<p>
+
+🪙 Custo: <strong>80 moedas</strong>
+
+</p>
+
+<button onclick="comprarTresVidas()">
+
+Comprar
+
+</button>
+
+</div>
+
+
+
+<div class="loja-item">
+
+<h3>🏆 Recompensa Especial</h3>
+
+<p>
+
+Troque moedas por uma recompensa.
+
+</p>
+
+<p>
+
+🪙 Custo: <strong>100 moedas</strong>
+
+</p>
+
+<button onclick="comprarRecompensa()">
+
+Comprar
+
+</button>
+
+</div>
+
+
+<p id="mensagem-loja"></p>
+
+
+<button onclick="fecharLoja()">
+
+⬅ Voltar ao jogo
+
+</button>
+
+
+</section>
+
 
 
 <section id="fim">
 
-    <h2>🏆 Fim do jogo</h2>
 
-    <p>
-        Você chegou até a fase:
-        <strong id="fase-final">0</strong>
-    </p>
+<h2>🏆 Fim do jogo</h2>
 
-    <p>
-        Pontuação:
-        <strong id="pontuacao-final">0</strong>
-    </p>
 
-    <p>
-        🪙 Moedas:
-        <strong id="moedas-final">0</strong>
-    </p>
+<p>
 
-    <p>
-        🏆 Recompensas:
-        <strong id="recompensas-final">0</strong>
-    </p>
+Você chegou à fase:
 
-    <button onclick="iniciarJogo()">
-        Jogar novamente
-    </button>
+<strong id="fase-final">0</strong>
+
+</p>
+
+
+<p>
+
+⭐ Pontuação:
+
+<strong id="pontuacao-final">0</strong>
+
+</p>
+
+
+<p>
+
+🪙 Moedas:
+
+<strong id="moedas-final">0</strong>
+
+</p>
+
+
+<p>
+
+🏆 Recompensas:
+
+<strong id="recompensas-final">0</strong>
+
+</p>
+
+
+<button onclick="iniciarJogo()">
+
+Jogar novamente
+
+</button>
+
 
 </section>
 
 
+
 <footer>
 
-    <p>
-        © 2026 Delta787 - A Lógica das Batatas
-    </p>
+<p>
+
+© 2026 Delta787 - A Lógica das Batatas
+
+</p>
 
 </footer>
+
 
 
 <script>
 
 
 const TOTAL_FASES = 1000;
+
 
 let faseAtual = 0;
 
@@ -299,626 +532,928 @@ let recompensas = 0;
 let perguntas = [];
 
 
-/* =========================
+
+/* ==============================
    GERAR PERGUNTAS
-   ========================= */
+============================== */
 
 
 function gerarPerguntas() {
 
-    const lista = [];
 
-    for (let i = 1; i <= TOTAL_FASES; i++) {
+const lista = [];
 
-        const dificuldade =
-            Math.ceil(i / 200);
 
-        const tipo =
-            i % 10;
+for (let i = 1; i <= TOTAL_FASES; i++) {
 
-        let pergunta;
 
+const dificuldade =
+Math.ceil(i / 200);
 
-        if (tipo === 0) {
 
-            const a =
-                i + dificuldade;
+const tipo = i % 10;
 
-            const b =
-                (i % 20) + dificuldade;
 
-            const resposta =
-                a + b;
+let pergunta;
 
-            pergunta =
-                criarPergunta(
-                    "Você tem " +
-                    a +
-                    " batatas e recebe mais " +
-                    b +
-                    ". Quantas batatas você tem agora?",
-                    resposta
-                );
 
-        }
 
+if (tipo === 0) {
 
-        else if (tipo === 1) {
 
-            const a =
-                i + 30 + dificuldade;
+const a = i + dificuldade;
 
-            const b =
-                (i % 20) + dificuldade;
+const b =
+(i % 20) + dificuldade;
 
-            const resposta =
-                a - b;
+const resposta = a + b;
 
-            pergunta =
-                criarPergunta(
-                    "Uma cesta tem " +
-                    a +
-                    " batatas. Você retira " +
-                    b +
-                    ". Quantas batatas restam?",
-                    resposta
-                );
 
-        }
+pergunta = criarPergunta(
 
+"Você tem " +
+a +
+" batatas e recebe mais " +
+b +
+". Quantas batatas você tem agora?",
 
-        else if (tipo === 2) {
+resposta
 
-            const a =
-                (i % 10) + 2;
+);
 
-            const b =
-                (i % 12) + 2;
-
-            const resposta =
-                a * b;
-
-            pergunta =
-                criarPergunta(
-                    "Existem " +
-                    a +
-                    " grupos com " +
-                    b +
-                    " batatas cada. Quantas batatas existem ao todo?",
-                    resposta
-                );
-
-        }
-
-
-        else if (tipo === 3) {
-
-            const divisor =
-                (i % 8) + 2;
-
-            const resposta =
-                (i % 15) + 2;
-
-            const total =
-                divisor * resposta;
-
-            pergunta =
-                criarPergunta(
-                    "Você tem " +
-                    total +
-                    " batatas e divide igualmente entre " +
-                    divisor +
-                    " pessoas. Quantas batatas cada pessoa recebe?",
-                    resposta
-                );
-
-        }
-
-
-        else if (tipo === 4) {
-
-            const numero =
-                (i % 100) + dificuldade;
-
-            const resposta =
-                numero * 2;
-
-            pergunta =
-                criarPergunta(
-                    "Qual é o dobro de " +
-                    numero +
-                    "?",
-                    resposta
-                );
-
-        }
-
-
-        else if (tipo === 5) {
-
-            const resposta =
-                (i % 100) + 2;
-
-            const numero =
-                resposta * 2;
-
-            pergunta =
-                criarPergunta(
-                    "Qual é a metade de " +
-                    numero +
-                    "?",
-                    resposta
-                );
-
-        }
-
-
-        else if (tipo === 6) {
-
-            const numero =
-                (i % 50) + 2;
-
-            const resposta =
-                numero * 3;
-
-            pergunta =
-                criarPergunta(
-                    "Qual é o triplo de " +
-                    numero +
-                    "?",
-                    resposta
-                );
-
-        }
-
-
-        else if (tipo === 7) {
-
-            const inicio =
-                (i % 50) + 1;
-
-            const passo =
-                dificuldade;
-
-            const segundo =
-                inicio + passo;
-
-            const resposta =
-                segundo + passo;
-
-            pergunta =
-                criarPergunta(
-                    "Observe a sequência: " +
-                    inicio +
-                    ", " +
-                    segundo +
-                    ". Qual é o próximo número?",
-                    resposta
-                );
-
-        }
-
-
-        else if (tipo === 8) {
-
-            const maior =
-                (i % 100) + 50;
-
-            const menor =
-                (i % 30) + 5;
-
-            const resposta =
-                maior - menor;
-
-            pergunta =
-                criarPergunta(
-                    "Qual é a diferença entre " +
-                    maior +
-                    " e " +
-                    menor +
-                    "?",
-                    resposta
-                );
-
-        }
-
-
-        else {
-
-            const pessoas =
-                (i % 8) + 2;
-
-            const batatas =
-                pessoas * 3;
-
-            const resposta =
-                batatas / pessoas;
-
-            pergunta =
-                criarPergunta(
-                    pessoas +
-                    " pessoas recebem igualmente " +
-                    batatas +
-                    " batatas. Quantas batatas cada pessoa recebe?",
-                    resposta
-                );
-
-        }
-
-
-        lista.push(pergunta);
-
-    }
-
-    return lista;
 
 }
 
 
-/* =========================
-   ALTERNATIVAS
-   ========================= */
+else if (tipo === 1) {
+
+
+const a =
+i + 30 + dificuldade;
+
+const b =
+(i % 20) + dificuldade;
+
+const resposta =
+a - b;
+
+
+pergunta = criarPergunta(
+
+"Uma cesta tem " +
+a +
+" batatas. Você retira " +
+b +
+". Quantas batatas restam?",
+
+resposta
+
+);
+
+
+}
+
+
+else if (tipo === 2) {
+
+
+const a =
+(i % 10) + 2;
+
+const b =
+(i % 12) + 2;
+
+const resposta =
+a * b;
+
+
+pergunta = criarPergunta(
+
+"Existem " +
+a +
+" grupos com " +
+b +
+" batatas cada. Quantas batatas existem ao todo?",
+
+resposta
+
+);
+
+
+}
+
+
+else if (tipo === 3) {
+
+
+const divisor =
+(i % 8) + 2;
+
+const resposta =
+(i % 15) + 2;
+
+const total =
+divisor * resposta;
+
+
+pergunta = criarPergunta(
+
+"Você tem " +
+total +
+" batatas e divide igualmente entre " +
+divisor +
+" pessoas. Quantas batatas cada pessoa recebe?",
+
+resposta
+
+);
+
+
+}
+
+
+else if (tipo === 4) {
+
+
+const numero =
+(i % 100) + dificuldade;
+
+const resposta =
+numero * 2;
+
+
+pergunta = criarPergunta(
+
+"Qual é o dobro de " +
+numero +
+"?",
+
+resposta
+
+);
+
+
+}
+
+
+else if (tipo === 5) {
+
+
+const resposta =
+(i % 100) + 2;
+
+const numero =
+resposta * 2;
+
+
+pergunta = criarPergunta(
+
+"Qual é a metade de " +
+numero +
+"?",
+
+resposta
+
+);
+
+
+}
+
+
+else if (tipo === 6) {
+
+
+const numero =
+(i % 50) + 2;
+
+const resposta =
+numero * 3;
+
+
+pergunta = criarPergunta(
+
+"Qual é o triplo de " +
+numero +
+"?",
+
+resposta
+
+);
+
+
+}
+
+
+else if (tipo === 7) {
+
+
+const inicio =
+(i % 50) + 1;
+
+const passo =
+dificuldade;
+
+const segundo =
+inicio + passo;
+
+const resposta =
+segundo + passo;
+
+
+pergunta = criarPergunta(
+
+"Observe a sequência: " +
+inicio +
+", " +
+segundo +
+". Qual é o próximo número?",
+
+resposta
+
+);
+
+
+}
+
+
+else if (tipo === 8) {
+
+
+const maior =
+(i % 100) + 50;
+
+const menor =
+(i % 30) + 5;
+
+const resposta =
+maior - menor;
+
+
+pergunta = criarPergunta(
+
+"Qual é a diferença entre " +
+maior +
+" e " +
+menor +
+"?",
+
+resposta
+
+);
+
+
+}
+
+
+else {
+
+
+const pessoas =
+(i % 8) + 2;
+
+const batatas =
+pessoas * 3;
+
+const resposta =
+batatas / pessoas;
+
+
+pergunta = criarPergunta(
+
+pessoas +
+" pessoas recebem igualmente " +
+batatas +
+" batatas. Quantas batatas cada pessoa recebe?",
+
+resposta
+
+);
+
+
+}
+
+
+lista.push(pergunta);
+
+
+}
+
+
+return lista;
+
+
+}
+
+
+
+/* ==============================
+   CRIAR PERGUNTA
+============================== */
 
 
 function criarPergunta(texto, resposta) {
 
-    let alternativas = [
 
-        resposta,
-        resposta + 1,
-        resposta - 1,
-        resposta + 2
+let alternativas = [
 
-    ];
+resposta,
 
-    alternativas =
-        embaralhar(alternativas);
+resposta + 1,
 
-    return {
+resposta - 1,
 
-        pergunta: texto,
+resposta + 2
 
-        opcoes: alternativas,
+];
 
-        correta:
-            alternativas.indexOf(resposta)
 
-    };
+alternativas =
+embaralhar(alternativas);
+
+
+return {
+
+pergunta: texto,
+
+opcoes: alternativas,
+
+correta:
+alternativas.indexOf(resposta)
+
+};
+
 
 }
+
+
+
+/* ==============================
+   EMBARALHAR
+============================== */
 
 
 function embaralhar(array) {
 
-    const novo =
-        [...array];
 
-    for (
-        let i = novo.length - 1;
-        i > 0;
-        i--
-    ) {
+const novo = [...array];
 
-        const j =
-            Math.floor(
-                Math.random() * (i + 1)
-            );
 
-        [
-            novo[i],
-            novo[j]
-        ] =
-        [
-            novo[j],
-            novo[i]
-        ];
+for (
+let i = novo.length - 1;
+i > 0;
+i--
+) {
 
-    }
 
-    return novo;
+const j =
+Math.floor(
+Math.random() * (i + 1)
+);
+
+
+[
+novo[i],
+novo[j]
+] =
+[
+novo[j],
+novo[i]
+];
+
 
 }
 
 
-/* =========================
+return novo;
+
+
+}
+
+
+
+/* ==============================
    INICIAR
-   ========================= */
+============================== */
 
 
 function iniciarJogo() {
 
-    perguntas =
-        gerarPerguntas();
 
-    faseAtual = 0;
-
-    pontuacao = 0;
-
-    vidas = 5;
-
-    moedas = 0;
-
-    recompensas = 0;
+perguntas =
+gerarPerguntas();
 
 
-    atualizarStatus();
+faseAtual = 0;
+
+pontuacao = 0;
+
+vidas = 5;
+
+moedas = 0;
+
+recompensas = 0;
 
 
-    document.getElementById(
-        "fim"
-    ).style.display =
-        "none";
+atualizarStatus();
 
 
-    document.getElementById(
-        "jogo"
-    ).style.display =
-        "block";
+document.getElementById("loja").style.display =
+"none";
 
 
-    mostrarFase();
+document.getElementById("fim").style.display =
+"none";
+
+
+document.getElementById("jogo").style.display =
+"block";
+
+
+mostrarFase();
+
 
 }
 
 
-/* =========================
+
+/* ==============================
    STATUS
-   ========================= */
+============================== */
 
 
 function atualizarStatus() {
 
-    document.getElementById(
-        "vidas"
-    ).textContent =
-        vidas;
 
-    document.getElementById(
-        "moedas"
-    ).textContent =
-        moedas;
+document.getElementById("vidas").textContent =
+vidas;
 
-    document.getElementById(
-        "recompensas"
-    ).textContent =
-        recompensas;
 
-    document.getElementById(
-        "pontuacao"
-    ).textContent =
-        pontuacao;
+document.getElementById("moedas").textContent =
+moedas;
+
+
+document.getElementById("recompensas").textContent =
+recompensas;
+
+
+document.getElementById("pontuacao").textContent =
+pontuacao;
+
+
+document.getElementById("moedas-loja").textContent =
+moedas;
+
 
 }
 
 
-/* =========================
+
+/* ==============================
    MOSTRAR FASE
-   ========================= */
+============================== */
 
 
 function mostrarFase() {
 
-    if (
-        faseAtual >= TOTAL_FASES ||
-        vidas <= 0
-    ) {
 
-        finalizarJogo();
-
-        return;
-
-    }
+if (
+faseAtual >= TOTAL_FASES ||
+vidas <= 0
+) {
 
 
-    const pergunta =
-        perguntas[faseAtual];
+finalizarJogo();
 
+return;
 
-    document.getElementById(
-        "fase"
-    ).textContent =
-        "🥔 Fase " +
-        (faseAtual + 1) +
-        " de 1.000";
-
-
-    document.getElementById(
-        "progresso"
-    ).textContent =
-        "Você está na fase " +
-        (faseAtual + 1) +
-        " de 1.000";
-
-
-    const porcentagem =
-        ((faseAtual + 1) /
-        TOTAL_FASES) * 100;
-
-
-    document.getElementById(
-        "barra"
-    ).style.width =
-        porcentagem + "%";
-
-
-    document.getElementById(
-        "pergunta"
-    ).textContent =
-        pergunta.pergunta;
-
-
-    const opcoes =
-        document.getElementById(
-            "opcoes"
-        );
-
-
-    opcoes.innerHTML = "";
-
-
-    pergunta.opcoes.forEach(
-        function(opcao, indice) {
-
-            const botao =
-                document.createElement(
-                    "button"
-                );
-
-            botao.textContent =
-                opcao;
-
-            botao.onclick =
-                function() {
-
-                    verificarResposta(
-                        indice
-                    );
-
-                };
-
-            opcoes.appendChild(
-                botao
-            );
-
-        }
-    );
-
-
-    document.getElementById(
-        "resultado"
-    ).textContent = "";
 
 }
 
 
-/* =========================
-   RESPOSTA
-   ========================= */
+const pergunta =
+perguntas[faseAtual];
+
+
+document.getElementById("fase").textContent =
+
+"🥔 Fase " +
+(faseAtual + 1) +
+" de 1.000";
+
+
+document.getElementById("progresso").textContent =
+
+"Você está na fase " +
+(faseAtual + 1) +
+" de 1.000";
+
+
+const porcentagem =
+
+((faseAtual + 1) /
+TOTAL_FASES) * 100;
+
+
+document.getElementById("barra").style.width =
+
+porcentagem + "%";
+
+
+document.getElementById("pergunta").textContent =
+
+pergunta.pergunta;
+
+
+const opcoes =
+document.getElementById("opcoes");
+
+
+opcoes.innerHTML = "";
+
+
+pergunta.opcoes.forEach(
+
+function(opcao, indice) {
+
+
+const botao =
+document.createElement("button");
+
+
+botao.textContent =
+opcao;
+
+
+botao.onclick =
+function() {
+
+verificarResposta(indice);
+
+};
+
+
+opcoes.appendChild(botao);
+
+
+}
+
+
+);
+
+
+document.getElementById("resultado").textContent =
+"";
+
+
+}
+
+
+
+/* ==============================
+   VERIFICAR RESPOSTA
+============================== */
 
 
 function verificarResposta(indice) {
 
-    const pergunta =
-        perguntas[faseAtual];
+
+const pergunta =
+perguntas[faseAtual];
 
 
-    const botoes =
-        document.querySelectorAll(
-            "#opcoes button"
-        );
+const botoes =
+document.querySelectorAll(
+"#opcoes button"
+);
 
 
-    botoes.forEach(
-        function(botao) {
+botoes.forEach(
 
-            botao.disabled =
-                true;
+function(botao) {
 
-        }
-    );
+botao.disabled = true;
 
+}
 
-    if (
-        indice ===
-        pergunta.correta
-    ) {
+);
 
 
-        pontuacao++;
-
-        moedas += 10;
-
-
-        if (
-            (faseAtual + 1) % 10 === 0
-        ) {
-
-            recompensas++;
-
-            moedas += 50;
-
-        }
+if (
+indice === pergunta.correta
+) {
 
 
-        document.getElementById(
-            "resultado"
-        ).textContent =
-            "✅ Correto! +10 moedas";
+pontuacao++;
+
+moedas += 10;
 
 
-    } else {
+if (
+(faseAtual + 1) % 10 === 0
+) {
 
 
-        vidas--;
+recompensas++;
+
+moedas += 50;
 
 
-        document.getElementById(
-            "resultado"
-        ).textContent =
-            "❌ Incorreto! Você perdeu 1 vida.";
+document.getElementById("resultado").textContent =
 
-    }
+"🏆 Fase concluída! +10 moedas +1 recompensa";
 
-
-    atualizarStatus();
-
-
-    faseAtual++;
-
-
-    setTimeout(
-        function() {
-
-            mostrarFase();
-
-        },
-        900
-    );
 
 }
 
 
-/* =========================
+else {
+
+
+document.getElementById("resultado").textContent =
+
+"✅ Correto! +10 moedas";
+
+
+}
+
+
+}
+
+
+else {
+
+
+vidas--;
+
+
+document.getElementById("resultado").textContent =
+
+"❌ Incorreto! Você perdeu 1 vida.";
+
+
+}
+
+
+atualizarStatus();
+
+
+faseAtual++;
+
+
+setTimeout(
+
+function() {
+
+mostrarFase();
+
+},
+
+900
+
+);
+
+
+}
+
+
+
+/* ==============================
+   ABRIR LOJA
+============================== */
+
+
+function abrirLoja() {
+
+
+document.getElementById("jogo").style.display =
+"none";
+
+
+document.getElementById("loja").style.display =
+"block";
+
+
+document.getElementById("fim").style.display =
+"none";
+
+
+document.getElementById("mensagem-loja").textContent =
+"";
+
+
+atualizarStatus();
+
+
+}
+
+
+
+/* ==============================
+   FECHAR LOJA
+============================== */
+
+
+function fecharLoja() {
+
+
+document.getElementById("loja").style.display =
+"none";
+
+
+document.getElementById("jogo").style.display =
+"block";
+
+
+document.getElementById("mensagem-loja").textContent =
+"";
+
+
+atualizarStatus();
+
+
+}
+
+
+
+/* ==============================
+   COMPRAR 1 VIDA
+============================== */
+
+
+function comprarVida() {
+
+
+if (moedas < 30) {
+
+
+mostrarMensagem(
+
+"❌ Você precisa de 30 moedas."
+
+);
+
+return;
+
+
+}
+
+
+moedas -= 30;
+
+vidas++;
+
+
+atualizarStatus();
+
+
+mostrarMensagem(
+
+"❤️ Você comprou 1 vida!"
+
+);
+
+
+}
+
+
+
+/* ==============================
+   COMPRAR 3 VIDAS
+============================== */
+
+
+function comprarTresVidas() {
+
+
+if (moedas < 80) {
+
+
+mostrarMensagem(
+
+"❌ Você precisa de 80 moedas."
+
+);
+
+return;
+
+
+}
+
+
+moedas -= 80;
+
+vidas += 3;
+
+
+atualizarStatus();
+
+
+mostrarMensagem(
+
+"❤️❤️❤️ Você comprou 3 vidas!"
+
+);
+
+
+}
+
+
+
+/* ==============================
+   COMPRAR RECOMPENSA
+============================== */
+
+
+function comprarRecompensa() {
+
+
+if (moedas < 100) {
+
+
+mostrarMensagem(
+
+"❌ Você precisa de 100 moedas."
+
+);
+
+return;
+
+
+}
+
+
+moedas -= 100;
+
+recompensas++;
+
+
+atualizarStatus();
+
+
+mostrarMensagem(
+
+"🏆 Você recebeu uma recompensa!"
+
+);
+
+
+}
+
+
+
+/* ==============================
+   MENSAGEM DA LOJA
+============================== */
+
+
+function mostrarMensagem(texto) {
+
+
+document.getElementById(
+"mensagem-loja"
+).textContent =
+texto;
+
+
+}
+
+
+
+/* ==============================
    FINAL
-   ========================= */
+============================== */
 
 
 function finalizarJogo() {
 
-    document.getElementById(
-        "jogo"
-    ).style.display =
-        "none";
+
+document.getElementById("jogo").style.display =
+"none";
 
 
-    document.getElementById(
-        "fim"
-    ).style.display =
-        "block";
+document.getElementById("loja").style.display =
+"none";
 
 
-    document.getElementById(
-        "fase-final"
-    ).textContent =
-        faseAtual;
+document.getElementById("fim").style.display =
+"block";
 
 
-    document.getElementById(
-        "pontuacao-final"
-    ).textContent =
-        pontuacao;
+document.getElementById("fase-final").textContent =
+faseAtual;
 
 
-    document.getElementById(
-        "moedas-final"
-    ).textContent =
-        moedas;
+document.getElementById("pontuacao-final").textContent =
+pontuacao;
 
 
-    document.getElementById(
-        "recompensas-final"
-    ).textContent =
-        recompensas;
+document.getElementById("moedas-final").textContent =
+moedas;
+
+
+document.getElementById("recompensas-final").textContent =
+recompensas;
+
 
 }
 
@@ -929,3 +1464,4 @@ function finalizarJogo() {
 </body>
 
 </html>
+      
