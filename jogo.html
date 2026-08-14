@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Lógica das Batatas - Jogo</title>
+
+    <title>🥔 A Lógica das Batatas</title>
+
+    <meta name="description" content="Desafie seu raciocínio e teste seus conhecimentos no jogo A Lógica das Batatas!">
+
+    <!-- Pré-visualização ao compartilhar -->
+    <meta property="og:title" content="🥔 A Lógica das Batatas">
+    <meta property="og:description" content="Desafie seu raciocínio e teste seus conhecimentos no jogo A Lógica das Batatas!">
+    <meta property="og:image" content="https://logicadasbatatas.onrender.com/logo.png">
+    <meta property="og:url" content="https://logicadasbatatas.onrender.com/jogo.html">
+    <meta property="og:type" content="website">
+
+    <!-- Pré-visualização para outras plataformas -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🥔 A Lógica das Batatas">
+    <meta name="twitter:description" content="Desafie seu raciocínio e teste seus conhecimentos!">
+    <meta name="twitter:image" content="https://logicadasbatatas.onrender.com/logo.png">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -26,7 +44,9 @@
 
             <p>Escolha um pacote de moedas.</p>
 
-            <p><strong>🪙 Suas moedas: <span id="moedas">0</span></strong></p>
+            <p>
+                <strong>🪙 Suas moedas: <span id="moedas">0</span></strong>
+            </p>
 
             <div class="pacote">
                 <h3>🪙 Pacote de R$ 1,00</h3>
@@ -89,6 +109,7 @@
     </main>
 
     <script>
+
         async function comprar(valor) {
 
             const mensagem = document.getElementById("mensagem");
@@ -99,9 +120,11 @@
 
                 const resposta = await fetch("/api/criar-pagamento", {
                     method: "POST",
+
                     headers: {
                         "Content-Type": "application/json"
                     },
+
                     body: JSON.stringify({
                         valor: valor
                     })
@@ -110,7 +133,9 @@
                 const dados = await resposta.json();
 
                 if (!resposta.ok || !dados.link) {
-                    throw new Error(dados.erro || "Erro ao criar pagamento.");
+                    throw new Error(
+                        dados.erro || "Erro ao criar pagamento."
+                    );
                 }
 
                 window.location.href = dados.link;
@@ -127,8 +152,9 @@
         function iniciarJogo() {
             window.location.href = "#loja";
         }
+
     </script>
 
 </body>
+
 </html>
-    
