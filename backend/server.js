@@ -6,14 +6,12 @@ const app = express();
 
 app.use(express.json());
 
-// Token do Mercado Pago
 const client = new MercadoPagoConfig({
   accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN
 });
 
 const preference = new Preference(client);
 
-// Criar pagamento
 app.post("/criar-pagamento", async (req, res) => {
   try {
     const pagamento = await preference.create({
@@ -28,6 +26,12 @@ app.post("/criar-pagamento", async (req, res) => {
             currency_id: "BRL"
           }
         ],
+
+        payment_methods: {
+          excluded_payment_types: [],
+          excluded_payment_methods: [],
+          installments: 12
+        },
 
         back_urls: {
           success: "https://logicadasbatatas.onrender.com/jogo.html?pagamento=sucesso",
@@ -54,11 +58,10 @@ app.post("/criar-pagamento", async (req, res) => {
   }
 });
 
-// Servir os arquivos do site
 app.use(express.static(path.join(__dirname, "..")));
 
-// Iniciar servidor
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Servidor funcionando na porta ${PORT}`);
+});
