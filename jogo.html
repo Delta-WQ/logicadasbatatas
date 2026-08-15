@@ -1,1 +1,274 @@
-<!DOCTYPE html> <html lang="pt-BR"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>A Lógica das Batatas</title> <style> body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; color: #222; text-align: center; } header { background: #222; color: white; padding: 25px; } main { max-width: 700px; margin: 50px auto; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); } .fase { display: none; } .ativa { display: block; } button { background: #3483fa; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 18px; cursor: pointer; margin: 10px; } button:hover { opacity: 0.9; } .preco { font-size: 30px; font-weight: bold; margin: 25px 0; } #mensagem { margin-top: 20px; font-weight: bold; } </style> </head> <body> <header> <h1>🥔 A Lógica das Batatas</h1> <p>O jogo oficial</p> </header> <main> <div id="fase1" class="fase ativa"> <h2>Fase 1</h2> <p>Você está na primeira fase gratuita.</p> <button onclick="proximaFase(2)">Continuar</button> </div> <div id="fase2" class="fase"> <h2>Fase 2</h2> <p>Você chegou à segunda fase gratuita.</p> <button onclick="mostrarPagamento()">Continuar</button> </div> <div id="pagamento" class="fase"> <h2>Continue o jogo</h2> <p>As próximas fases estão disponíveis após o pagamento.</p> <div class="preco"> R$ 1,00 </div> <button id="botaoComprar" onclick="comprarJogo()"> Comprar agora </button> <div id="mensagem"></div> </div> </main> <script> function proximaFase(numero) { document.querySelectorAll(".fase").forEach(function(fase) { fase.classList.remove("ativa"); }); document.getElementById("fase" + numero).classList.add("ativa"); } function mostrarPagamento() { document.querySelectorAll(".fase").forEach(function(fase) { fase.classList.remove("ativa"); }); document.getElementById("pagamento").classList.add("ativa"); } async function comprarJogo() { const botao = document.getElementById("botaoComprar"); const mensagem = document.getElementById("mensagem"); botao.disabled = true; botao.textContent = "Criando PIX..."; mensagem.textContent = ""; try { const resposta = await fetch("/criar-pagamento", { method: "POST", headers: { "Content-Type": "application/json" } }); const dados = await resposta.json(); if (!resposta.ok || !dados.sucesso) { throw new Error("Erro ao criar pagamento"); } if (dados.qr_code) { document.getElementById("pagamento").innerHTML = ` <h2>Pagamento via PIX</h2> <p>Escaneie o QR Code ou copie o código PIX.</p> <textarea id="codigoPix" readonly style="width:100%;height:100px;padding:10px;" >${dados.qr_code}</textarea> <br> <button onclick="copiarPix()"> Copiar código PIX </button> <div id="mensagem"> Aguardando pagamento... </div> `; window.paymentId = dados.payment_id; verificarPagamento(); } else { throw new Error("PIX não foi criado"); } } catch (erro) { console.error(erro); mensagem.textContent = "Não foi possível iniciar o pagamento. Tente novamente."; botao.disabled = false; botao.textContent = "Comprar agora"; } } function copiarPix() { const campo = document.getElementById("codigoPix"); campo.select(); document.execCommand("copy"); document.getElementById("mensagem").textContent = "Código PIX copiado."; } async function verificarPagamento() { if (!window.paymentId) return; try { const resposta = await fetch( "/consultar-pagamento/" + window.paymentId ); const dados = await resposta.json(); if (dados.status === "approved") { document.getElementById("pagamento").innerHTML = ` <h2>Pagamento aprovado! 🎉</h2> <p>Obrigado por comprar A Lógica das Batatas.</p> <button onclick="iniciarJogoCompleto()"> Continuar o jogo </button> `; return; } } catch (erro) { console.error(erro); } setTimeout(verificarPagamento, 5000); } function iniciarJogoCompleto() { document.getElementById("pagamento").innerHTML = ` <h2>🥔 Jogo desbloqueado!</h2> <p>Agora você pode continuar A Lógica das Batatas.</p> `; } </script> </body> </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Lógica das Batatas</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+    text-align: center;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 25px;
+}
+
+main {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.fase {
+    display: none;
+}
+
+.ativa {
+    display: block;
+}
+
+button {
+    background: #3483fa;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.preco {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+#mensagem {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#codigoPix {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🥔 A Lógica das Batatas</h1>
+    <p>O jogo oficial</p>
+</header>
+
+<main>
+
+    <div id="fase1" class="fase ativa">
+        <h2>Fase 1</h2>
+        <p>Você está na primeira fase gratuita.</p>
+        <button onclick="proximaFase(2)">Continuar</button>
+    </div>
+
+    <div id="fase2" class="fase">
+        <h2>Fase 2</h2>
+        <p>Você chegou à segunda fase gratuita.</p>
+        <button onclick="mostrarPagamento()">Continuar</button>
+    </div>
+
+    <div id="pagamento" class="fase">
+        <h2>Continue o jogo</h2>
+        <p>As próximas fases estão disponíveis após o pagamento.</p>
+
+        <div class="preco">
+            R$ 1,00
+        </div>
+
+        <button id="botaoComprar" onclick="comprarJogo()">
+            Comprar agora
+        </button>
+
+        <div id="mensagem"></div>
+    </div>
+
+</main>
+
+<script>
+
+function proximaFase(numero) {
+    document.querySelectorAll(".fase").forEach(function(fase) {
+        fase.classList.remove("ativa");
+    });
+
+    document.getElementById("fase" + numero).classList.add("ativa");
+}
+
+function mostrarPagamento() {
+    document.querySelectorAll(".fase").forEach(function(fase) {
+        fase.classList.remove("ativa");
+    });
+
+    document.getElementById("pagamento").classList.add("ativa");
+}
+
+async function comprarJogo() {
+
+    const botao = document.getElementById("botaoComprar");
+    const mensagem = document.getElementById("mensagem");
+
+    botao.disabled = true;
+    botao.textContent = "Criando PIX...";
+    mensagem.textContent = "";
+
+    try {
+
+        const resposta = await fetch("/criar-pagamento", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok || !dados.sucesso) {
+            console.error("Resposta do servidor:", dados);
+            throw new Error("Erro ao criar pagamento");
+        }
+
+        if (!dados.qr_code) {
+            console.error("PIX não recebido:", dados);
+            throw new Error("PIX não foi criado");
+        }
+
+        document.getElementById("pagamento").innerHTML = `
+            <h2>Pagamento via PIX</h2>
+
+            <p>Escaneie o QR Code ou copie o código PIX.</p>
+
+            <textarea id="codigoPix" readonly>${dados.qr_code}</textarea>
+
+            <br>
+
+            <button onclick="copiarPix()">
+                Copiar código PIX
+            </button>
+
+            <div id="mensagem">
+                Aguardando pagamento...
+            </div>
+        `;
+
+        window.paymentId = dados.payment_id;
+
+        verificarPagamento();
+
+    } catch (erro) {
+
+        console.error("Erro:", erro);
+
+        mensagem.textContent =
+            "Não foi possível iniciar o pagamento. Tente novamente.";
+
+        botao.disabled = false;
+        botao.textContent = "Comprar agora";
+    }
+}
+
+function copiarPix() {
+
+    const campo = document.getElementById("codigoPix");
+
+    campo.select();
+    campo.setSelectionRange(0, 99999);
+
+    navigator.clipboard.writeText(campo.value)
+        .then(function() {
+            document.getElementById("mensagem").textContent =
+                "Código PIX copiado.";
+        })
+        .catch(function() {
+            document.getElementById("mensagem").textContent =
+                "Selecione e copie o código PIX.";
+        });
+}
+
+async function verificarPagamento() {
+
+    if (!window.paymentId) {
+        return;
+    }
+
+    try {
+
+        const resposta = await fetch(
+            "/consultar-pagamento/" + window.paymentId
+        );
+
+        const dados = await resposta.json();
+
+        console.log("Status do pagamento:", dados);
+
+        if (dados.status === "approved") {
+
+            document.getElementById("pagamento").innerHTML = `
+                <h2>Pagamento aprovado! 🎉</h2>
+
+                <p>
+                    Obrigado por comprar A Lógica das Batatas.
+                </p>
+
+                <button onclick="iniciarJogoCompleto()">
+                    Continuar o jogo
+                </button>
+            `;
+
+            return;
+        }
+
+    } catch (erro) {
+
+        console.error("Erro ao verificar pagamento:", erro);
+    }
+
+    setTimeout(verificarPagamento, 5000);
+}
+
+function iniciarJogoCompleto() {
+
+    document.getElementById("pagamento").innerHTML = `
+        <h2>🥔 Jogo desbloqueado!</h2>
+
+        <p>
+            Agora você pode continuar A Lógica das Batatas.
+        </p>
+    `;
+}
+
+</script>
+
+</body>
+</html>
