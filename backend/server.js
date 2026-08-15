@@ -20,7 +20,7 @@ app.post("/criar-pagamento", async (req, res) => {
           {
             id: "logica-das-batatas",
             title: "A Lógica das Batatas",
-            description: "Compra do jogo A Lógica das Batatas",
+            description: "Pagamento via PIX",
             quantity: 1,
             unit_price: 1.00,
             currency_id: "BRL"
@@ -29,21 +29,11 @@ app.post("/criar-pagamento", async (req, res) => {
 
         payment_methods: {
           excluded_payment_types: [
-            {
-              id: "credit_card"
-            },
-            {
-              id: "debit_card"
-            },
-            {
-              id: "prepaid_card"
-            },
-            {
-              id: "ticket"
-            },
-            {
-              id: "digital_currency"
-            }
+            { id: "credit_card" },
+            { id: "debit_card" },
+            { id: "prepaid_card" },
+            { id: "ticket" },
+            { id: "digital_currency" }
           ]
         },
 
