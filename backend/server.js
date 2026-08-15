@@ -36,7 +36,13 @@ app.post("/criar-pagamento", async (req, res) => {
               id: "debit_card"
             },
             {
+              id: "prepaid_card"
+            },
+            {
               id: "ticket"
+            },
+            {
+              id: "digital_currency"
             }
           ]
         },
