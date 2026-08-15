@@ -38,7 +38,8 @@ app.post("/criar-pagamento", async (req, res) => {
             {
               id: "debit_card"
             }
-          ]
+          ],
+          excluded_payment_methods: []
         },
 
         back_urls: {
