@@ -1,295 +1,137 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>🥔 A Lógica das Batatas</title>
+  <title>A Lógica das Batatas</title>
 
-    <meta name="description" content="A Lógica das Batatas — um jogo de raciocínio, atenção e conhecimentos. Comece gratuitamente!">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #222;
+      text-align: center;
+    }
 
-    <meta property="og:title" content="🥔 A Lógica das Batatas">
-    <meta property="og:description" content="Desafie seu raciocínio e teste seus conhecimentos. Comece a jogar gratuitamente!">
-    <meta property="og:image" content="https://logicadasbatatas.onrender.com/logo.png">
-    <meta property="og:url" content="https://logicadasbatatas.onrender.com/jogo.html">
-    <meta property="og:type" content="website">
+    header {
+      background: #222;
+      color: white;
+      padding: 25px;
+    }
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="🥔 A Lógica das Batatas">
-    <meta name="twitter:description" content="Comece a jogar gratuitamente!">
-    <meta name="twitter:image" content="https://logicadasbatatas.onrender.com/logo.png">
+    main {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
 
-    <link rel="stylesheet" href="style.css">
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .preco {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 25px 0;
+    }
+
+    button {
+      background: #3483fa;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    #mensagem {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
 
+<header>
+  <h1>🥔 A Lógica das Batatas</h1>
+  <p>O jogo oficial</p>
+</header>
+
 <main>
 
-    <h1>🥔 A Lógica das Batatas</h1>
+  <h2>Comprar o jogo</h2>
 
-    <p>
-        Um jogo de raciocínio, atenção, memória e conhecimentos.
-        Teste sua capacidade e descubra até onde consegue chegar!
-    </p>
+  <p>
+    Adquira acesso ao jogo A Lógica das Batatas.
+  </p>
 
-    <!-- INÍCIO -->
-    <section id="inicio">
+  <div class="preco">
+    R$ 1,00
+  </div>
 
-        <h2>🎮 Comece gratuitamente</h2>
+  <button id="botaoComprar" onclick="comprarJogo()">
+    Comprar agora
+  </button>
 
-        <p>
-            Você pode começar a jogar agora mesmo.
-            Resolva os desafios e acumule suas primeiras moedas.
-        </p>
-
-        <button onclick="comecarJogo()">▶️ Começar a jogar</button>
-
-    </section>
-
-    <!-- JOGO -->
-    <section id="jogo" style="display:none;">
-
-        <h2>🧠 Desafio</h2>
-
-        <p id="pergunta"></p>
-
-        <div id="opcoes"></div>
-
-        <p>
-            🪙 Moedas: <strong><span id="moedas">0</span></strong>
-        </p>
-
-        <p id="resultado"></p>
-
-    </section>
-
-    <!-- LOJA -->
-    <section id="loja" style="display:none;">
-
-        <h2>🛒 Loja de Moedas</h2>
-
-        <p>
-            Você já experimentou o jogo.
-            Agora adquira mais moedas para continuar avançando.
-        </p>
-
-        <p>
-            🪙 Suas moedas:
-            <strong><span id="moedasLoja">0</span></strong>
-        </p>
-
-        <div class="pacote">
-            <h3>🪙 R$ 1,00</h3>
-            <p>100 moedas</p>
-            <button onclick="comprar(1)">Comprar — R$ 1,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 2,00</h3>
-            <p>250 moedas</p>
-            <button onclick="comprar(2)">Comprar — R$ 2,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 3,00</h3>
-            <p>400 moedas</p>
-            <button onclick="comprar(3)">Comprar — R$ 3,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 4,00</h3>
-            <p>550 moedas</p>
-            <button onclick="comprar(4)">Comprar — R$ 4,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 5,00</h3>
-            <p>700 moedas</p>
-            <button onclick="comprar(5)">Comprar — R$ 5,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 10,00</h3>
-            <p>1.500 moedas</p>
-            <button onclick="comprar(10)">Comprar — R$ 10,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 20,00</h3>
-            <p>3.500 moedas</p>
-            <button onclick="comprar(20)">Comprar — R$ 20,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 50,00</h3>
-            <p>10.000 moedas</p>
-            <button onclick="comprar(50)">Comprar — R$ 50,00</button>
-        </div>
-
-        <div class="pacote">
-            <h3>🪙 R$ 100,00</h3>
-            <p>22.000 moedas</p>
-            <button onclick="comprar(100)">Comprar — R$ 100,00</button>
-        </div>
-
-        <p id="mensagem"></p>
-
-    </section>
+  <div id="mensagem"></div>
 
 </main>
 
 <script>
 
-let moedas = 10;
-let perguntaAtual = 0;
+async function comprarJogo() {
 
-const perguntas = [
-    {
-        pergunta: "Qual é o próximo número? 2, 4, 6, 8, ?",
-        opcoes: ["9", "10", "11", "12"],
-        correta: "10"
-    },
-    {
-        pergunta: "Qual palavra não pertence ao grupo?",
-        opcoes: ["Maçã", "Banana", "Batata", "Laranja"],
-        correta: "Batata"
-    },
-    {
-        pergunta: "Se você tem 5 batatas e ganha mais 3, quantas terá?",
-        opcoes: ["6", "7", "8", "9"],
-        correta: "8"
-    }
-];
+  const botao = document.getElementById("botaoComprar");
+  const mensagem = document.getElementById("mensagem");
 
-function comecarJogo() {
+  botao.disabled = true;
+  botao.textContent = "Abrindo pagamento...";
+  mensagem.textContent = "";
 
-    document.getElementById("inicio").style.display = "none";
-    document.getElementById("jogo").style.display = "block";
+  try {
 
-    mostrarPergunta();
-}
-
-function mostrarPergunta() {
-
-    if (perguntaAtual >= perguntas.length) {
-
-        document.getElementById("pergunta").textContent =
-            "🎉 Você terminou a primeira fase gratuita!";
-
-        document.getElementById("opcoes").innerHTML = `
-            <button onclick="abrirLoja()">
-                🛒 Continuar jogando
-            </button>
-        `;
-
-        return;
-    }
-
-    const p = perguntas[perguntaAtual];
-
-    document.getElementById("pergunta").textContent = p.pergunta;
-
-    const opcoes = document.getElementById("opcoes");
-
-    opcoes.innerHTML = "";
-
-    p.opcoes.forEach(opcao => {
-
-        const botao = document.createElement("button");
-
-        botao.textContent = opcao;
-
-        botao.onclick = () => responder(opcao);
-
-        opcoes.appendChild(botao);
+    const resposta = await fetch("/criar-pagamento", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
-}
 
-function responder(resposta) {
+    const dados = await resposta.json();
 
-    const p = perguntas[perguntaAtual];
-
-    const resultado = document.getElementById("resultado");
-
-    if (resposta === p.correta) {
-
-        moedas += 5;
-
-        resultado.textContent =
-            "✅ Correto! Você ganhou 5 moedas.";
-
-    } else {
-
-        resultado.textContent =
-            "❌ Resposta incorreta. Tente novamente.";
+    if (!resposta.ok || !dados.sucesso) {
+      throw new Error(dados.erro || "Erro ao criar pagamento");
     }
 
-    document.getElementById("moedas").textContent = moedas;
+    // Envia o comprador para o checkout do Mercado Pago
+    window.location.href = dados.checkout_url;
 
-    if (resposta === p.correta) {
+  } catch (erro) {
 
-        perguntaAtual++;
+    console.error(erro);
 
-        setTimeout(() => {
+    mensagem.textContent =
+      "Não foi possível iniciar o pagamento. Tente novamente.";
 
-            resultado.textContent = "";
-
-            mostrarPergunta();
-
-        }, 1000);
-    }
-}
-
-function abrirLoja() {
-
-    document.getElementById("jogo").style.display = "none";
-
-    document.getElementById("loja").style.display = "block";
-
-    document.getElementById("moedasLoja").textContent = moedas;
-}
-
-async function comprar(valor) {
-
-    const mensagem = document.getElementById("mensagem");
-
-    mensagem.textContent = "Criando pagamento...";
-
-    try {
-
-        const resposta = await fetch("/api/criar-pagamento", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                valor: valor
-            })
-        });
-
-        const dados = await resposta.json();
-
-        if (!resposta.ok || !dados.link) {
-
-            throw new Error(
-                dados.erro || "Erro ao criar pagamento."
-            );
-        }
-
-        window.location.href = dados.link;
-
-    } catch (erro) {
-
-        console.error(erro);
-
-        mensagem.textContent =
-            "❌ Não foi possível criar o pagamento. Tente novamente.";
-    }
+    botao.disabled = false;
+    botao.textContent = "Comprar agora";
+  }
 }
 
 </script>
