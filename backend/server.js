@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname));
 
 const ACCESS_TOKEN = process.env.MERCADOPAGO_ACCESS_TOKEN;
 
@@ -49,12 +49,9 @@ app.post("/criar-pagamento", async (req, res) => {
       sucesso: true,
       payment_id: pagamento.id,
       status: pagamento.status,
-      qr_code:
-        pagamento.point_of_interaction?.transaction_data?.qr_code,
-      qr_code_base64:
-        pagamento.point_of_interaction?.transaction_data?.qr_code_base64,
-      ticket_url:
-        pagamento.point_of_interaction?.transaction_data?.ticket_url
+      qr_code: pagamento.point_of_interaction?.transaction_data?.qr_code,
+      qr_code_base64: pagamento.point_of_interaction?.transaction_data?.qr_code_base64,
+      ticket_url: pagamento.point_of_interaction?.transaction_data?.ticket_url
     });
 
   } catch (erro) {
