@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 const client = new MercadoPagoConfig({
-  accessToken: "SEU_ACCESS_TOKEN_DE_PRODUCAO_AQUI"
+  accessToken: "APP_USR-7760968762453302-081500-b2617e2e62d7efa719f74c0f3c7c9e7b-3617094508"
 });
 
 const preference = new Preference(client);
