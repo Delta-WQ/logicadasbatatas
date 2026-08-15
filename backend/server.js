@@ -27,6 +27,10 @@ app.post("/criar-pagamento", async (req, res) => {
           }
         ],
 
+        payment_methods: {
+          installments: 12
+        },
+
         back_urls: {
           success: "https://logicadasbatatas.onrender.com/jogo.html?pagamento=sucesso",
           failure: "https://logicadasbatatas.onrender.com/jogo.html?pagamento=falhou",
@@ -59,3 +63,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor funcionando na porta ${PORT}`);
 });
+           
