@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN
+  accessToken: "SEU_ACCESS_TOKEN_DE_PRODUCAO_AQUI"
 });
 
 const preference = new Preference(client);
@@ -30,7 +30,11 @@ app.post("/criar-pagamento", async (req, res) => {
           failure: "https://logicadasbatatas.onrender.com/jogo.html",
           pending: "https://logicadasbatatas.onrender.com/jogo.html"
         },
-        auto_return: "approved"
+        auto_return: "approved",
+        payment_methods: {
+          excluded_payment_types: [],
+          installments: 1
+        }
       }
     });
 
