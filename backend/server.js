@@ -27,12 +27,6 @@ app.post("/criar-pagamento", async (req, res) => {
           }
         ],
 
-        payment_methods: {
-          excluded_payment_types: [],
-          excluded_payment_methods: [],
-          installments: 12
-        },
-
         back_urls: {
           success: "https://logicadasbatatas.onrender.com/jogo.html?pagamento=sucesso",
           failure: "https://logicadasbatatas.onrender.com/jogo.html?pagamento=falhou",
