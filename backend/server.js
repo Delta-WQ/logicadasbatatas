@@ -28,7 +28,11 @@ app.post("/criar-pagamento", async (req, res) => {
         ],
 
         payment_methods: {
-          installments: 12
+          excluded_payment_types: [
+            {
+              id: "ticket"
+            }
+          ]
         },
 
         back_urls: {
@@ -63,4 +67,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor funcionando na porta ${PORT}`);
 });
-           
