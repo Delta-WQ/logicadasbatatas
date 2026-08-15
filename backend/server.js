@@ -31,6 +31,12 @@ app.post("/criar-pagamento", async (req, res) => {
           excluded_payment_types: [
             {
               id: "ticket"
+            },
+            {
+              id: "credit_card"
+            },
+            {
+              id: "debit_card"
             }
           ]
         },
