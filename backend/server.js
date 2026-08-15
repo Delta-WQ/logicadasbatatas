@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const crypto = require("crypto");
 
 const app = express();
@@ -36,6 +37,7 @@ app.post("/criar-pagamento", async (req, res) => {
     const pagamento = await resposta.json();
 
     if (!resposta.ok) {
+      console.error("Erro Mercado Pago:", pagamento);
       return res.status(400).json({
         sucesso: false,
         erro: pagamento
@@ -46,12 +48,15 @@ app.post("/criar-pagamento", async (req, res) => {
       sucesso: true,
       payment_id: pagamento.id,
       status: pagamento.status,
+      valor: pagamento.transaction_amount,
       qr_code: pagamento.point_of_interaction?.transaction_data?.qr_code,
-      qr_code_base64: pagamento.point_of_interaction?.transaction_data?.qr_code_base64
+      qr_code_base64: pagamento.point_of_interaction?.transaction_data?.qr_code_base64,
+      ticket_url: pagamento.point_of_interaction?.transaction_data?.ticket_url
     });
 
   } catch (erro) {
-    console.error(erro);
+    console.error("Erro ao criar PIX:", erro);
+
     res.status(500).json({
       sucesso: false,
       erro: "Erro interno ao criar pagamento PIX"
@@ -75,10 +80,13 @@ app.get("/consultar-pagamento/:id", async (req, res) => {
     res.json({
       sucesso: resposta.ok,
       id: pagamento.id,
-      status: pagamento.status
+      status: pagamento.status,
+      status_detail: pagamento.status_detail
     });
 
   } catch (erro) {
+    console.error("Erro ao consultar pagamento:", erro);
+
     res.status(500).json({
       sucesso: false,
       erro: "Erro ao consultar pagamento"
